@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Entity
 public class Usuario {
@@ -22,9 +23,9 @@ public class Usuario {
 	@Column(nullable = false)
 	private LocalDateTime cadastro;
 	
-	public Usuario(String login, String senha) {
+	public Usuario(String login, Senha senha) {
 		this.login = login;
-		this.senha = senha;
+		this.senha = senha.getSenha();
 	}
 	
 	public Long getId() {

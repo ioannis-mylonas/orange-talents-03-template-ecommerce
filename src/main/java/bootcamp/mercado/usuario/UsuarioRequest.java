@@ -20,6 +20,6 @@ public class UsuarioRequest {
 	}
 
 	public Usuario converte(PasswordEncoder encoder) {
-		return new Usuario(login.toLowerCase(), encoder.encode(senha));
+		return new Usuario(login, new Senha(senha, encoder));
 	}
 }
