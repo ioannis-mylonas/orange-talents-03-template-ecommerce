@@ -20,7 +20,7 @@ public class Usuario {
 	private String senha;
 	@CreationTimestamp
 	@Column(nullable = false)
-	private LocalDateTime cadastro = LocalDateTime.now();
+	private LocalDateTime cadastro;
 	
 	public Usuario(String login, String senha) {
 		this.login = login;
