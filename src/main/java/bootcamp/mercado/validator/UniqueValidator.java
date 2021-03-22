@@ -9,10 +9,13 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 public class UniqueValidator implements ConstraintValidator<Unique, Object> {
-	@PersistenceContext
 	private EntityManager manager;
 	private Class<?> target;
 	private String field;
+	
+	public UniqueValidator(EntityManager manager) {
+		this.manager = manager;
+	}
 	
 	@Override
 	public void initialize(Unique constraint) {
@@ -22,6 +25,10 @@ public class UniqueValidator implements ConstraintValidator<Unique, Object> {
 	
 	@Override
 	public boolean isValid(Object value, ConstraintValidatorContext context) {
+		return validate(value, target, field);
+	}
+	
+	public boolean validate(Object value, Class<?> target, String field) {
 		String q = String.format("SELECT 1 FROM %s s WHERE lower(trim(s.%s))=lower(trim(:value))",
 				target.getName(), field);
 		

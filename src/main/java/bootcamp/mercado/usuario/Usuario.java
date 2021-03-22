@@ -23,6 +23,9 @@ public class Usuario {
 	@Column(nullable = false)
 	private LocalDateTime cadastro;
 	
+	@Deprecated
+	public Usuario() {}
+	
 	public Usuario(String login, Senha senha) {
 		this.login = login;
 		this.senha = senha.getSenha();
@@ -30,5 +33,9 @@ public class Usuario {
 	
 	public Long getId() {
 		return id;
+	}
+	
+	public String getLogin() {
+		return login;
 	}
 }
