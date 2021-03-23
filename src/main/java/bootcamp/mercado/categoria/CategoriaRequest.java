@@ -17,9 +17,11 @@ public class CategoriaRequest {
 	}
 	
 	public Categoria converte(CategoriaRepository repository) {
-		Categoria parenteObj = parente == null ?
-				null : repository.findByNome(parente).get();
+		Categoria categoria = new Categoria(nome);
 		
-		return new Categoria(nome, parenteObj);
+		if (parente != null) categoria.setParente(
+				repository.findByNome(parente).get());
+		
+		return categoria;
 	}
 }

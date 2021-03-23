@@ -19,8 +19,11 @@ public class Categoria {
 	@Deprecated
 	public Categoria() {}
 	
-	public Categoria(String nome, Categoria parente) {
+	public Categoria(String nome) {
 		this.nome = nome;
+	}
+	
+	public void setParente(Categoria parente) {
 		this.parente = parente;
 	}
 	
