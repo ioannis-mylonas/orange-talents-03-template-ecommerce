@@ -66,8 +66,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	public void configure(WebSecurity web) throws Exception {
 	}
-	
-	public static void main(String[] args) {
-		System.out.println(new Argon2PasswordEncoder().encode("123456"));
-	}
 }

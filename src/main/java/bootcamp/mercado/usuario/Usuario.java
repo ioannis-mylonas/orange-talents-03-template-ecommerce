@@ -17,6 +17,8 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import bootcamp.mercado.autenticacao.Perfil;
+
 @Entity
 public class Usuario implements UserDetails {
 	

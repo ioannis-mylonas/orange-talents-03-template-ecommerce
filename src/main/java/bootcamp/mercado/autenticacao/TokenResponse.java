@@ -1,4 +1,4 @@
-package bootcamp.mercado.usuario;
+package bootcamp.mercado.autenticacao;
 
 public class TokenResponse {
 	private String token;

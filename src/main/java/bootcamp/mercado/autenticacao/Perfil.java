@@ -1,4 +1,4 @@
-package bootcamp.mercado.usuario;
+package bootcamp.mercado.autenticacao;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
