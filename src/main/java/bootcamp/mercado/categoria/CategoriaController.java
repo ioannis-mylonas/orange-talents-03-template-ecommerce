@@ -1,5 +1,6 @@
 package bootcamp.mercado.categoria;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,7 +18,8 @@ public class CategoriaController {
 	}
 	
 	@PostMapping
-	public Long cadastra(@RequestBody @Valid CategoriaRequest request) {
+	@Transactional
+	public Long cadastra(@RequestBody @Valid CategoriaRequest request) {		
 		Categoria categoria = request.converte(repository);
 		repository.save(categoria);
 		return categoria.getId();
