@@ -69,6 +69,10 @@ public class Produto {
 		return this.id;
 	}
 	
+	public Usuario getDono() {
+		return this.dono;
+	}
+	
 	public List<Caracteristica> getCaracteristicas() {
 		return this.caracteristicas;
 	}
