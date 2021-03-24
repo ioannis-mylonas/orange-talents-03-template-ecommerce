@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -24,7 +25,7 @@ public class ProdutoRequest {
 	private BigDecimal preco;
 	@NotNull @Min(value = 0)
 	private Integer quantidade;
-	@NotNull @Size(min = 3)
+	@NotNull @Size(min = 3) @Valid
 	private List<CaracteristicaRequest> caracteristicas;
 	@NotBlank @Size(max = 1000)
 	private String descricao;
@@ -43,6 +44,10 @@ public class ProdutoRequest {
 		this.categoria = categoria;
 	}
 	
+	public List<CaracteristicaRequest> getCaracteristicas() {
+		return caracteristicas;
+	}
+
 	public Produto converte(CategoriaRepository categoriaRepository, Usuario dono) {
 		List<Caracteristica> caracteristicasObj = caracteristicas
 				.stream()

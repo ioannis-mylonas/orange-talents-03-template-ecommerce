@@ -13,6 +13,14 @@ public class CaracteristicaRequest {
 		this.descricao = descricao;
 	}
 	
+	public String getNome() {
+		return nome;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
 	public Caracteristica converte() {
 		return new Caracteristica(nome, descricao);
 	}
