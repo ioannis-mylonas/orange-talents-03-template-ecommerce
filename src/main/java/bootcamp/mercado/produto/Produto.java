@@ -18,6 +18,7 @@ import org.hibernate.annotations.CreationTimestamp;
 
 import bootcamp.mercado.caracteristica.Caracteristica;
 import bootcamp.mercado.categoria.Categoria;
+import bootcamp.mercado.usuario.Usuario;
 
 @Entity
 public class Produto {
@@ -39,6 +40,9 @@ public class Produto {
 	@ManyToOne
 	@JoinColumn(nullable = false)
 	private Categoria categoria;
+	@ManyToOne
+	@JoinColumn(nullable = false)
+	private Usuario dono;
 	@CreationTimestamp
 	@Column(nullable = false)
 	private LocalDateTime criacao;
@@ -49,7 +53,8 @@ public class Produto {
 	public Produto(String nome, BigDecimal preco,
 			Integer quantidade, String descricao,
 			List<Caracteristica> caracteristicas,
-			Categoria categoria) {
+			Categoria categoria,
+			Usuario dono) {
 		
 		this.nome = nome;
 		this.preco = preco;
@@ -57,6 +62,7 @@ public class Produto {
 		this.descricao = descricao;
 		this.caracteristicas = caracteristicas;
 		this.categoria = categoria;
+		this.dono = dono;
 	}
 
 	public Long getId() {

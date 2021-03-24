@@ -14,8 +14,8 @@ import bootcamp.mercado.caracteristica.Caracteristica;
 import bootcamp.mercado.caracteristica.CaracteristicaRequest;
 import bootcamp.mercado.categoria.Categoria;
 import bootcamp.mercado.categoria.CategoriaRepository;
+import bootcamp.mercado.usuario.Usuario;
 import bootcamp.mercado.validator.Exists;
-import io.jsonwebtoken.lang.Collections;
 
 public class ProdutoRequest {
 	@NotBlank
@@ -43,7 +43,7 @@ public class ProdutoRequest {
 		this.categoria = categoria;
 	}
 	
-	public Produto converte(CategoriaRepository categoriaRepository) {
+	public Produto converte(CategoriaRepository categoriaRepository, Usuario dono) {
 		List<Caracteristica> caracteristicasObj = caracteristicas
 				.stream()
 				.map(i -> { return i.converte(); })
@@ -51,6 +51,7 @@ public class ProdutoRequest {
 		
 		Categoria categoriaObj = categoriaRepository.findByNome(categoria).get();
 		
-		return new Produto(nome, preco, quantidade, descricao, caracteristicasObj, categoriaObj);
+		return new Produto(nome, preco, quantidade,
+				descricao, caracteristicasObj, categoriaObj, dono);
 	}
 }
