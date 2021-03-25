@@ -13,4 +13,8 @@ public class Foto {
 	public Foto(String uri) {
 		this.uri = uri;
 	}
+	
+	public String getUri() {
+		return this.uri;
+	}
 }

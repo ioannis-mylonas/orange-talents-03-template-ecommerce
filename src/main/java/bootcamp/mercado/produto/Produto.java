@@ -75,6 +75,26 @@ public class Produto {
 		return this.id;
 	}
 	
+	public String getNome() {
+		return this.nome;
+	}
+	
+	public BigDecimal getPreco() {
+		return preco;
+	}
+
+	public Integer getQuantidade() {
+		return quantidade;
+	}
+
+	public String getDescricao() {
+		return descricao;
+	}
+
+	public List<Foto> getFotos() {
+		return fotos;
+	}
+
 	public Usuario getDono() {
 		return this.dono;
 	}

@@ -34,6 +34,9 @@ public class Pergunta {
 	@JoinColumn(nullable = false)
 	private Produto produto;
 	
+	@Deprecated
+	public Pergunta() {}
+	
 	public Pergunta(String titulo, Usuario usuario, Produto produto) {
 		this.titulo = titulo;
 		this.usuario = usuario;
@@ -43,5 +46,17 @@ public class Pergunta {
 	public void envia(EmailService emailService) {
 		System.out.println("Email enviado por " + usuario.getLogin());
 		emailService.envia(titulo, produto.getDono().getLogin());
+	}
+
+	public String getTitulo() {
+		return titulo;
+	}
+
+	public LocalDateTime getCriacao() {
+		return criacao;
+	}
+
+	public Usuario getUsuario() {
+		return usuario;
 	}
 }
