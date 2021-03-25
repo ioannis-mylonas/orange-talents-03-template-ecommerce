@@ -51,20 +51,12 @@ public class FotoController {
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 		}
 		
-		try {
-			List<String> uriList = storage.saveAll(request.getFotos());
-			List<Foto> fotos = FotoRequest.converte(uriList);
-			
-			fotoRepository.saveAll(fotos);
-			produto.get().addFotos(fotos);
-			produtoRepository.save(produto.get());
-		} catch (IOException e) {
-			e.printStackTrace();
-			// DEBUG ONLY
-			return ResponseEntity
-					.status(HttpStatus.INTERNAL_SERVER_ERROR)
-					.body(e);
-		}
+		List<String> uriList = storage.saveAll(request.getFotos());
+		List<Foto> fotos = FotoRequest.converte(uriList);
+		
+		fotoRepository.saveAll(fotos);
+		produto.get().addFotos(fotos);
+		produtoRepository.save(produto.get());
 		
 		return ResponseEntity.ok().build();
 	}
