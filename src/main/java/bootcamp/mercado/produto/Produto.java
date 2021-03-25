@@ -2,6 +2,7 @@ package bootcamp.mercado.produto;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -13,11 +14,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import org.hibernate.annotations.CreationTimestamp;
 
 import bootcamp.mercado.caracteristica.Caracteristica;
 import bootcamp.mercado.categoria.Categoria;
+import bootcamp.mercado.foto.Foto;
 import bootcamp.mercado.usuario.Usuario;
 
 @Entity
@@ -46,6 +49,9 @@ public class Produto {
 	@CreationTimestamp
 	@Column(nullable = false)
 	private LocalDateTime criacao;
+	@OneToMany
+	@JoinColumn
+	private List<Foto> fotos = new ArrayList<>();
 	
 	@Deprecated
 	public Produto() {}
@@ -75,5 +81,9 @@ public class Produto {
 	
 	public List<Caracteristica> getCaracteristicas() {
 		return this.caracteristicas;
+	}
+	
+	public void addFotos(List<Foto> fotos) {
+		this.fotos.addAll(fotos);
 	}
 }

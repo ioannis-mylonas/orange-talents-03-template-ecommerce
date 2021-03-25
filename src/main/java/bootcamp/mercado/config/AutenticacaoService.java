@@ -36,4 +36,8 @@ public class AutenticacaoService implements UserDetailsService {
 					.getPrincipal();
 	}
 	
+	public boolean isUser(Usuario usuario) {
+		return getLoggedUser().getId() == usuario.getId();
+	}
+	
 }
