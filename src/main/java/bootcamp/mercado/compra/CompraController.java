@@ -10,6 +10,7 @@ import bootcamp.mercado.usuario.Usuario;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -25,6 +26,8 @@ public class CompraController {
     private final CompraRepository compraRepository;
     private final GatewayService gatewayService;
     private final EmailService emailService;
+
+    private final String tag = "[CompraController] ";
 
     public CompraController(ProdutoRepository produtoRepository,
                             CompraRepository compraRepository,
@@ -43,13 +46,13 @@ public class CompraController {
                                           UriComponentsBuilder uriComponentsBuilder,
                                           @AuthenticationPrincipal Usuario usuario) {
 
-        assert usuario != null;
+        Assert.isTrue(usuario != null, tag + "Usuario null!");
 
         Optional<Produto> produto = produtoRepository.findById(request.getProdutoId());
-        assert produto.isPresent();
+        Assert.isTrue(produto.isPresent(), tag + "Produto inexistente!");
 
         Gateway gateway = gatewayService.getGateway(request.getGateway());
-        assert gateway != null;
+        Assert.isTrue(gateway != null, tag + "Gateway inexistente!");
 
         Compra compra = request.converte(usuario, produto.get());
         compraRepository.save(compra);

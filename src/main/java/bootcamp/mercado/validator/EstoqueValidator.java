@@ -2,6 +2,7 @@ package bootcamp.mercado.validator;
 
 import bootcamp.mercado.compra.CompraRequest;
 import bootcamp.mercado.produto.Produto;
+import org.springframework.util.Assert;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -11,6 +12,7 @@ import java.util.List;
 
 public class EstoqueValidator implements ConstraintValidator<Estoque, CompraRequest> {
     private final EntityManager entityManager;
+    private final String tag = "[EstoqueValidator] ";
 
     private Class<?> target;
     private String field;
@@ -37,7 +39,7 @@ public class EstoqueValidator implements ConstraintValidator<Estoque, CompraRequ
         query.setParameter("value", produtoId);
 
         List<?> res = query.getResultList();
-        assert res.size() <= 1;
+        Assert.isTrue(res.size() <= 1, tag + "Estado inválido: Id do produto duplicado!");
 
         if (res.isEmpty()) return false;
         Produto produto = (Produto) res.stream().findFirst().get();
