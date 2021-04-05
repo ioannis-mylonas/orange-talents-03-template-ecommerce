@@ -22,6 +22,7 @@ import bootcamp.mercado.caracteristica.Caracteristica;
 import bootcamp.mercado.categoria.Categoria;
 import bootcamp.mercado.foto.Foto;
 import bootcamp.mercado.usuario.Usuario;
+import org.springframework.util.Assert;
 
 @Entity
 public class Produto {
@@ -108,8 +109,8 @@ public class Produto {
 	}
 
 	public void diminuirQuantidade(int quantidade) {
-		assert quantidade > 0;
+		Assert.isTrue(this.quantidade >= quantidade,
+				"Tentando diminuir quantidade maior que a quantidade disponível do produto!");
 		this.quantidade -= quantidade;
-		assert this.quantidade >= 0;
 	}
 }
