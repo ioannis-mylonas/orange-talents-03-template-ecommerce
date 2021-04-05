@@ -5,6 +5,7 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,13 +35,13 @@ public class OpiniaoController {
 	}
 	
 	@PostMapping("/{id}")
-	public ResponseEntity<Long> cadastra(@PathVariable(name = "id", required = true)
-	Long id, @RequestBody @Valid OpiniaoRequest request) {
+	public ResponseEntity<Long> cadastra(@PathVariable(name = "id", required = true) Long id,
+										 @RequestBody @Valid OpiniaoRequest request,
+										 @AuthenticationPrincipal Usuario usuario) {
 		
 		Optional<Produto> produto = produtoRepository.findById(id);
 		if (produto.isEmpty()) return ResponseEntity.notFound().build();
 		
-		Usuario usuario = authService.getLoggedUser();
 		Opiniao opiniao = request.converte(usuario, produto.get());
 		
 		opiniaoRepository.save(opiniao);

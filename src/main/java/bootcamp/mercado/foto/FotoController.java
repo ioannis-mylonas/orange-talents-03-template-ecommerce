@@ -7,8 +7,10 @@ import java.util.Optional;
 
 import javax.validation.Valid;
 
+import bootcamp.mercado.usuario.Usuario;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,14 +42,15 @@ public class FotoController {
 	}
 	
 	@PostMapping("/{id}")
-	public ResponseEntity<?> insere(@PathVariable(name="id", required=true)
-	Long id, @Valid FotoRequest request) {
+	public ResponseEntity<?> insere(@PathVariable(name="id", required=true) Long id,
+									@Valid FotoRequest request,
+									@AuthenticationPrincipal Usuario usuario) {
 				
 		Optional<Produto> produto = produtoRepository.findById(id);
 		
 		if (produto.isEmpty()) return ResponseEntity.notFound().build();
 		
-		if (!authService.isUser(produto.get().getDono())) {
+		if (!authService.isUser(produto.get().getDono(), usuario)) {
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 		}
 		

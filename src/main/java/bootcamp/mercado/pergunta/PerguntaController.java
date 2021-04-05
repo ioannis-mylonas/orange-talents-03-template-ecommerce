@@ -5,6 +5,7 @@ import java.util.Optional;
 import javax.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -38,13 +39,13 @@ public class PerguntaController {
 	}
 	
 	@PostMapping("/{id}")
-	public ResponseEntity<?> envia(@PathVariable(name = "id", required = true)
-	Long id, @RequestBody @Valid PerguntaRequest request) {
+	public ResponseEntity<?> envia(@PathVariable(name = "id", required = true) Long id,
+								   @RequestBody @Valid PerguntaRequest request,
+								   @AuthenticationPrincipal Usuario usuario) {
 		
 		Optional<Produto> produto = produtoRepository.findById(id);
 		if (produto.isEmpty()) return ResponseEntity.notFound().build();
 		
-		Usuario usuario = autenticacaoService.getLoggedUser();
 		Pergunta pergunta = request.converte(usuario, produto.get());
 		
 		perguntaRepository.save(pergunta);

@@ -29,15 +29,8 @@ public class AutenticacaoService implements UserDetailsService {
 		throw new UsernameNotFoundException("Usuário não encontrado");
 	}
 	
-	public Usuario getLoggedUser() {
-		return (Usuario) SecurityContextHolder
-					.getContext()
-					.getAuthentication()
-					.getPrincipal();
-	}
-	
-	public boolean isUser(Usuario usuario) {
-		return getLoggedUser().getId() == usuario.getId();
+	public boolean isUser(Usuario autenticado, Usuario usuario) {
+		return autenticado.getId() == usuario.getId();
 	}
 	
 }

@@ -106,4 +106,10 @@ public class Produto {
 	public void addFotos(List<Foto> fotos) {
 		this.fotos.addAll(fotos);
 	}
+
+	public void diminuirQuantidade(int quantidade) {
+		assert quantidade > 0;
+		this.quantidade -= quantidade;
+		assert this.quantidade >= 0;
+	}
 }

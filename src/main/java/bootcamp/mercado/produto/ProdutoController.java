@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -50,9 +51,9 @@ public class ProdutoController {
 	
 	@PostMapping
 	@Transactional
-	public Long cadastra(@RequestBody @Valid ProdutoRequest request) {
-		Usuario dono = authService.getLoggedUser();
-		
+	public Long cadastra(@RequestBody @Valid ProdutoRequest request,
+						 @AuthenticationPrincipal Usuario dono) {
+
 		Produto produto = request.converte(categoriaRepository, dono);
 		caracteristicaRepository.saveAll(produto.getCaracteristicas());
 		repository.save(produto);
