@@ -21,15 +21,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	private UsuarioLogin usuarioLogin;
-	private TokenService tokenService;
 	private UsuarioRepository usuarioRepository;
 	
 	public SecurityConfig(UsuarioLogin usuarioLogin,
-						  TokenService tokenService,
 						  UsuarioRepository usuarioRepository) {
 		
 		this.usuarioLogin = usuarioLogin;
-		this.tokenService = tokenService;
 		this.usuarioRepository = usuarioRepository;
 	}
 
@@ -60,8 +57,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.and().csrf().disable()
 			.sessionManagement()
 			.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-			.and().addFilterBefore(new TokenAuthFilter(tokenService,
-					usuarioRepository),
+			.and().addFilterBefore(new TokenAuthFilter(usuarioRepository),
 					UsernamePasswordAuthenticationFilter.class);
 	}
 	

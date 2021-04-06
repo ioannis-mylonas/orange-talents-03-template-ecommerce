@@ -1,10 +1,9 @@
 package bootcamp.mercado.autenticacao;
 
-import bootcamp.mercado.config.TokenService;
+import bootcamp.mercado.usuario.Usuario;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,12 +17,9 @@ import javax.validation.Valid;
 public class AutenticacaoController {
 	
 	private AuthenticationManager manager;
-	private TokenService tokenService;
-	
-	public AutenticacaoController(AuthenticationManager manager,
-			TokenService tokenService) {
+
+	public AutenticacaoController(AuthenticationManager manager) {
 		this.manager = manager;
-		this.tokenService = tokenService;
 	}
 
 	@PostMapping
@@ -31,8 +27,8 @@ public class AutenticacaoController {
 		UsernamePasswordAuthenticationToken userPassToken = request.converte();
 		
 		try {
-			Authentication result = manager.authenticate(userPassToken);
-			String token = tokenService.gerarToken(result);
+			Usuario usuario = (Usuario) manager.authenticate(userPassToken).getPrincipal();
+			String token = new Token(usuario).getToken();
 			return ResponseEntity.ok(new TokenResponse(token));
 		} catch (AuthenticationException e) {
 			return ResponseEntity.badRequest().build();

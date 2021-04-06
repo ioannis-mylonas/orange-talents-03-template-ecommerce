@@ -1,5 +1,6 @@
 package bootcamp.mercado.config;
 
+import bootcamp.mercado.autenticacao.Token;
 import bootcamp.mercado.usuario.Usuario;
 import bootcamp.mercado.usuario.UsuarioRepository;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -14,13 +15,9 @@ import java.io.IOException;
 
 public class TokenAuthFilter extends OncePerRequestFilter {
 	
-	private TokenService tokenService;
 	private UsuarioRepository repository;
 
-	public TokenAuthFilter(TokenService tokenService,
-			UsuarioRepository repository) {
-		
-		this.tokenService = tokenService;
+	public TokenAuthFilter(UsuarioRepository repository) {
 		this.repository = repository;
 	}
 
@@ -29,8 +26,7 @@ public class TokenAuthFilter extends OncePerRequestFilter {
 			throws ServletException, IOException {
 		
 		String token = getToken(request);
-		boolean valido = tokenService.isValid(token);
-		if (valido) autentica(token);
+		autentica(token);
 		
 		filterChain.doFilter(request, response);
 	}
@@ -44,11 +40,14 @@ public class TokenAuthFilter extends OncePerRequestFilter {
 	}
 	
 	private void autentica(String token) {
-		Long usuarioId = tokenService.getUsuarioId(token);
-		Usuario usuario = repository.findById(usuarioId).get();
-		
-		UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(usuario, null, usuario.getAuthorities());
-		SecurityContextHolder.getContext().setAuthentication(auth);
+		Long usuarioId = Token.parseId(token);
+		if (usuarioId != null) {
+			Usuario usuario = repository.findById(usuarioId).get();
+
+			UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(usuario,
+					null, usuario.getAuthorities());
+			SecurityContextHolder.getContext().setAuthentication(auth);
+		}
 	}
 
 }
