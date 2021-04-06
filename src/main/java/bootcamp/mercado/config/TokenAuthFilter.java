@@ -44,7 +44,7 @@ public class TokenAuthFilter extends OncePerRequestFilter {
 	}
 	
 	private void autentica(String token) {
-		Token res = tokenBuilder.build(token);
+		Token res = tokenBuilder.parse(token);
 		if (res == null) return;
 
 		Optional<Usuario> usuario = repository.findById(res.getId());

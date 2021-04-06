@@ -18,7 +18,7 @@ public class TokenBuilder {
         return new Token(usuario, secret, expiration, issuer);
     }
 
-    public Token build(String token) {
+    public Token parse(String token) {
         try {
             return new Token(token, secret);
         } catch (JwtException e) {
