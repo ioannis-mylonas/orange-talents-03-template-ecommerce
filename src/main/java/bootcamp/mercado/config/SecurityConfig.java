@@ -1,5 +1,6 @@
 package bootcamp.mercado.config;
 
+import bootcamp.mercado.autenticacao.TokenBuilder;
 import bootcamp.mercado.autenticacao.UsuarioLogin;
 import bootcamp.mercado.usuario.UsuarioRepository;
 import org.springframework.context.annotation.Bean;
@@ -8,7 +9,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -19,15 +19,17 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-	
 	private UsuarioLogin usuarioLogin;
 	private UsuarioRepository usuarioRepository;
-	
+	private TokenBuilder tokenBuilder;
+
 	public SecurityConfig(UsuarioLogin usuarioLogin,
-						  UsuarioRepository usuarioRepository) {
-		
+						  UsuarioRepository usuarioRepository,
+						  TokenBuilder tokenBuilder) {
+
 		this.usuarioLogin = usuarioLogin;
 		this.usuarioRepository = usuarioRepository;
+		this.tokenBuilder = tokenBuilder;
 	}
 
 	@Bean
@@ -57,11 +59,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.and().csrf().disable()
 			.sessionManagement()
 			.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-			.and().addFilterBefore(new TokenAuthFilter(usuarioRepository),
+			.and().addFilterBefore(new TokenAuthFilter(usuarioRepository, tokenBuilder),
 					UsernamePasswordAuthenticationFilter.class);
-	}
-	
-	@Override
-	public void configure(WebSecurity web) throws Exception {
 	}
 }

@@ -1,6 +1,7 @@
 package bootcamp.mercado.config;
 
 import bootcamp.mercado.autenticacao.Token;
+import bootcamp.mercado.autenticacao.TokenBuilder;
 import bootcamp.mercado.usuario.Usuario;
 import bootcamp.mercado.usuario.UsuarioRepository;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -12,13 +13,16 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Optional;
 
 public class TokenAuthFilter extends OncePerRequestFilter {
 	
 	private UsuarioRepository repository;
+	private TokenBuilder tokenBuilder;
 
-	public TokenAuthFilter(UsuarioRepository repository) {
+	public TokenAuthFilter(UsuarioRepository repository, TokenBuilder tokenBuilder) {
 		this.repository = repository;
+		this.tokenBuilder = tokenBuilder;
 	}
 
 	@Override
@@ -40,14 +44,15 @@ public class TokenAuthFilter extends OncePerRequestFilter {
 	}
 	
 	private void autentica(String token) {
-		Long usuarioId = Token.parseId(token);
-		if (usuarioId != null) {
-			Usuario usuario = repository.findById(usuarioId).get();
+		Token res = tokenBuilder.build(token);
+		if (res == null) return;
 
-			UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(usuario,
-					null, usuario.getAuthorities());
-			SecurityContextHolder.getContext().setAuthentication(auth);
-		}
+		Optional<Usuario> usuario = repository.findById(res.getId());
+		if (usuario.isEmpty()) return;
+
+		UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(usuario.get(),
+				null, usuario.get().getAuthorities());
+		SecurityContextHolder.getContext().setAuthentication(auth);
 	}
 
 }

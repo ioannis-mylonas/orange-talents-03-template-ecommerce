@@ -17,9 +17,11 @@ import javax.validation.Valid;
 public class AutenticacaoController {
 	
 	private AuthenticationManager manager;
+	private TokenBuilder tokenBuilder;
 
-	public AutenticacaoController(AuthenticationManager manager) {
+	public AutenticacaoController(AuthenticationManager manager, TokenBuilder tokenBuilder) {
 		this.manager = manager;
+		this.tokenBuilder = tokenBuilder;
 	}
 
 	@PostMapping
@@ -28,7 +30,7 @@ public class AutenticacaoController {
 		
 		try {
 			Usuario usuario = (Usuario) manager.authenticate(userPassToken).getPrincipal();
-			String token = new Token(usuario).getToken();
+			String token = tokenBuilder.build(usuario).getToken();
 			return ResponseEntity.ok(new TokenResponse(token));
 		} catch (AuthenticationException e) {
 			return ResponseEntity.badRequest().build();
