@@ -28,6 +28,9 @@ public class Compra {
     @Column(nullable = false)
     private CompraStatus status;
 
+    @Deprecated
+    public Compra() {}
+
     public Compra(Usuario usuario, Produto produto, String gateway,
                   Integer quantidade, BigDecimal precoUnidade, CompraStatus status) {
 
