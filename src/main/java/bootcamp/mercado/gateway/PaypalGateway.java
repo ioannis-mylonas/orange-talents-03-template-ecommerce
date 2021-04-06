@@ -3,17 +3,15 @@ package bootcamp.mercado.gateway;
 import bootcamp.mercado.compra.Compra;
 import org.springframework.web.util.UriComponentsBuilder;
 
-public class PaypalGateway implements Gateway {
+public class PaypalGateway extends Gateway {
 
-    @Override
-    public Boolean isGateway(String nome) {
-        return nome.trim().equalsIgnoreCase("paypal");
+    public PaypalGateway() {
+        super("Paypal", "paypal.com");
     }
 
     @Override
     public String gerarURI(Compra compra, String redirectUri) {
-        String uri = "paypal.com";
-        return UriComponentsBuilder.fromUriString(uri)
+        return UriComponentsBuilder.fromUriString(baseUri)
                 .queryParam("buyerId", compra.getId())
                 .queryParam("redirectUrl", redirectUri)
                 .encode()

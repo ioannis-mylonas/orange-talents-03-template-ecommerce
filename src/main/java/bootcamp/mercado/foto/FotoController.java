@@ -42,7 +42,7 @@ public class FotoController {
 		
 		if (produto.isEmpty()) return ResponseEntity.notFound().build();
 		
-		if (produto.get().getDono() == usuario) {
+		if (!usuario.equals(produto.get().getDono())) {
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 		}
 		

@@ -21,7 +21,7 @@ public class TokenBuilder {
     public Token parse(String token) {
         try {
             return new Token(token, secret);
-        } catch (JwtException e) {
+        } catch (Exception e) {
             return null;
         }
     }
