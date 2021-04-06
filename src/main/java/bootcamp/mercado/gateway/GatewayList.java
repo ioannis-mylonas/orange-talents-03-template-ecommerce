@@ -1,23 +1,25 @@
 package bootcamp.mercado.gateway;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import org.springframework.stereotype.Component;
 
+import java.util.Collection;
+
+@Component
 public class GatewayList {
-    private static List<Gateway> gateways = new ArrayList<>(Arrays.asList(
-            new PaypalGateway(),
-            new PagseguroGateway()
-    ));
+    private Collection<Gateway> gateways;
 
-    public static Gateway getGateway(String nome) {
+    public GatewayList(Collection<Gateway> gateways) {
+        this.gateways = gateways;
+    }
+
+    public Gateway getGateway(String nome) {
         for (Gateway gateway : gateways) {
             if (gateway.isGateway(nome)) return gateway;
         }
         return null;
     }
 
-    public static Boolean exists(String nome) {
+    public Boolean exists(String nome) {
         for (Gateway gateway : gateways) {
             if (gateway.isGateway(nome)) return true;
         }

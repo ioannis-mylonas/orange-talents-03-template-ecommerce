@@ -1,8 +1,10 @@
 package bootcamp.mercado.gateway;
 
 import bootcamp.mercado.compra.Compra;
+import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 
+@Component
 public class PaypalGateway extends Gateway {
 
     public PaypalGateway() {

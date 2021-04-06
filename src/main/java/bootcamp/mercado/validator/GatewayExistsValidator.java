@@ -6,8 +6,14 @@ import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
 public class GatewayExistsValidator implements ConstraintValidator<GatewayExists, String> {
+    private final GatewayList gatewayList;
+
+    public GatewayExistsValidator(GatewayList gatewayList) {
+        this.gatewayList = gatewayList;
+    }
+
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
-        return GatewayList.exists(value);
+        return gatewayList.exists(value);
     }
 }

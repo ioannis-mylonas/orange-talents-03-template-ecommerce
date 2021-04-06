@@ -26,16 +26,19 @@ public class CompraController {
     private final ProdutoRepository produtoRepository;
     private final CompraRepository compraRepository;
     private final MailSender mailSender;
+    private final GatewayList gatewayList;
 
     private final String tag = "[CompraController] ";
 
     public CompraController(ProdutoRepository produtoRepository,
                             CompraRepository compraRepository,
-                            MailSender mailSender) {
+                            MailSender mailSender,
+                            GatewayList gatewayList) {
 
         this.produtoRepository = produtoRepository;
         this.compraRepository = compraRepository;
         this.mailSender = mailSender;
+        this.gatewayList = gatewayList;
     }
 
     @PostMapping
@@ -49,7 +52,7 @@ public class CompraController {
         Optional<Produto> produto = produtoRepository.findById(request.getProdutoId());
         Assert.isTrue(produto.isPresent(), tag + "Produto inexistente!");
 
-        Gateway gateway = GatewayList.getGateway(request.getGateway());
+        Gateway gateway = gatewayList.getGateway(request.getGateway());
         Assert.isTrue(gateway != null, tag + "Gateway inexistente!");
 
         Compra compra = request.converte(usuario, produto.get());

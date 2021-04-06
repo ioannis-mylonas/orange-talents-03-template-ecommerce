@@ -1,7 +1,6 @@
 package bootcamp.mercado.autenticacao;
 
 import bootcamp.mercado.usuario.Usuario;
-import io.jsonwebtoken.JwtException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
