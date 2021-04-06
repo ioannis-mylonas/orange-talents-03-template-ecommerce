@@ -1,20 +1,12 @@
 package bootcamp.mercado.pergunta;
 
-import java.time.LocalDateTime;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-
-import org.hibernate.annotations.CreationTimestamp;
-
-import bootcamp.mercado.email.EmailService;
+import bootcamp.mercado.email.MailSender;
 import bootcamp.mercado.produto.Produto;
 import bootcamp.mercado.usuario.Usuario;
+import org.hibernate.annotations.CreationTimestamp;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
 public class Pergunta {
@@ -43,9 +35,9 @@ public class Pergunta {
 		this.produto = produto;
 	}
 	
-	public void envia(EmailService emailService) {
+	public void envia(MailSender mailSender) {
 		System.out.println("Email enviado por " + usuario.getLogin());
-		emailService.envia(titulo, produto.getDono().getLogin());
+		mailSender.envia(titulo, produto.getDono().getLogin());
 	}
 
 	public String getTitulo() {

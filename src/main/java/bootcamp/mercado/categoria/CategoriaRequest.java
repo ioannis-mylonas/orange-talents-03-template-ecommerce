@@ -1,9 +1,9 @@
 package bootcamp.mercado.categoria;
 
-import javax.validation.constraints.NotBlank;
-
 import bootcamp.mercado.validator.Exists;
 import bootcamp.mercado.validator.Unique;
+
+import javax.validation.constraints.NotBlank;
 
 public class CategoriaRequest {
 	@NotBlank @Unique(target = Categoria.class, field = "nome")

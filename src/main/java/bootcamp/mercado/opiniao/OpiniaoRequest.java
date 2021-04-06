@@ -1,13 +1,9 @@
 package bootcamp.mercado.opiniao;
 
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
 import bootcamp.mercado.produto.Produto;
 import bootcamp.mercado.usuario.Usuario;
+
+import javax.validation.constraints.*;
 
 public class OpiniaoRequest {
 	@NotBlank

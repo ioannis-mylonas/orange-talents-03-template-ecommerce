@@ -1,12 +1,11 @@
 package bootcamp.mercado.usuario;
 
+import bootcamp.mercado.validator.Unique;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-
-import org.springframework.security.crypto.password.PasswordEncoder;
-
-import bootcamp.mercado.validator.Unique;
 
 public class UsuarioRequest {
 	@NotBlank @Email @Unique(target = Usuario.class, field = "login")

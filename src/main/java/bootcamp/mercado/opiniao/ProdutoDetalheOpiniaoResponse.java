@@ -1,9 +1,9 @@
 package bootcamp.mercado.opiniao;
 
+import bootcamp.mercado.usuario.ProdutoDetalheUsuarioResponse;
+
 import java.util.List;
 import java.util.stream.Collectors;
-
-import bootcamp.mercado.usuario.ProdutoDetalheUsuarioResponse;
 
 public class ProdutoDetalheOpiniaoResponse {
 	private String titulo;

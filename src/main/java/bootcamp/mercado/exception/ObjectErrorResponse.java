@@ -1,6 +1,5 @@
 package bootcamp.mercado.exception;
 
-import org.aspectj.bridge.Message;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.validation.ObjectError;

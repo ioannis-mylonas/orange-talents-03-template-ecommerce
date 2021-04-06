@@ -1,13 +1,13 @@
 package bootcamp.mercado.storage;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
-public class StorageServiceDev implements StorageService {
+public class FileDownloaderDev implements FileDownloader {
 	public String save(MultipartFile resource) {
 		return resource.getOriginalFilename();
 	}

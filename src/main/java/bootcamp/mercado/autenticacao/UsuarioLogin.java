@@ -1,23 +1,20 @@
-package bootcamp.mercado.config;
+package bootcamp.mercado.autenticacao;
 
-import java.util.Optional;
-
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import bootcamp.mercado.usuario.Usuario;
+import bootcamp.mercado.usuario.UsuarioRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import bootcamp.mercado.usuario.Usuario;
-import bootcamp.mercado.usuario.UsuarioRepository;
+import java.util.Optional;
 
 @Service
-public class AutenticacaoService implements UserDetailsService {
+public class UsuarioLogin implements UserDetailsService {
 	
 	private UsuarioRepository repository;
 	
-	public AutenticacaoService(UsuarioRepository repository) {
+	public UsuarioLogin(UsuarioRepository repository) {
 		this.repository = repository;
 	}
 
@@ -28,9 +25,4 @@ public class AutenticacaoService implements UserDetailsService {
 		
 		throw new UsernameNotFoundException("Usuário não encontrado");
 	}
-	
-	public boolean isUser(Usuario autenticado, Usuario usuario) {
-		return autenticado.getId() == usuario.getId();
-	}
-	
 }

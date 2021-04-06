@@ -1,10 +1,10 @@
 package bootcamp.mercado.pergunta;
 
+import bootcamp.mercado.usuario.ProdutoDetalheUsuarioResponse;
+
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import bootcamp.mercado.usuario.ProdutoDetalheUsuarioResponse;
 
 public class ProdutoDetalhePerguntaResponse {
 	private String titulo;

@@ -1,23 +1,15 @@
 package bootcamp.mercado.usuario;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-
+import bootcamp.mercado.autenticacao.Perfil;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import bootcamp.mercado.autenticacao.Perfil;
+import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 @Entity
 public class Usuario implements UserDetails {
@@ -51,6 +43,15 @@ public class Usuario implements UserDetails {
 	
 	public String getLogin() {
 		return login;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == this) return true;
+
+		if (!(obj instanceof Usuario)) return false;
+
+		return this.id.equals(((Usuario) obj).getId());
 	}
 
 	@Override

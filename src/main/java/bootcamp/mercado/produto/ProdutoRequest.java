@@ -1,22 +1,17 @@
 package bootcamp.mercado.produto;
 
-import java.math.BigDecimal;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import javax.validation.Valid;
-import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
-
 import bootcamp.mercado.caracteristica.Caracteristica;
 import bootcamp.mercado.caracteristica.CaracteristicaRequest;
 import bootcamp.mercado.categoria.Categoria;
 import bootcamp.mercado.categoria.CategoriaRepository;
 import bootcamp.mercado.usuario.Usuario;
 import bootcamp.mercado.validator.Exists;
+
+import javax.validation.Valid;
+import javax.validation.constraints.*;
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ProdutoRequest {
 	@NotBlank

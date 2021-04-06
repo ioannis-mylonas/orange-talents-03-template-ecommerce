@@ -1,41 +1,31 @@
 package bootcamp.mercado.pergunta;
 
-import java.util.Optional;
-
-import javax.validation.Valid;
-
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import bootcamp.mercado.config.AutenticacaoService;
-import bootcamp.mercado.email.EmailService;
+import bootcamp.mercado.email.MailSender;
 import bootcamp.mercado.produto.Produto;
 import bootcamp.mercado.produto.ProdutoRepository;
 import bootcamp.mercado.usuario.Usuario;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/perguntas")
 public class PerguntaController {
 	
-	private AutenticacaoService autenticacaoService;
 	private ProdutoRepository produtoRepository;
 	private PerguntaRepository perguntaRepository;
-	private EmailService emailService;
+	private MailSender mailSender;
 	
-	public PerguntaController(AutenticacaoService autenticacaoService,
-			ProdutoRepository produtoRepository,
-			PerguntaRepository perguntaRepository,
-			EmailService emailService) {
+	public PerguntaController(ProdutoRepository produtoRepository,
+							  PerguntaRepository perguntaRepository,
+							  MailSender mailSender) {
 		
-		this.autenticacaoService = autenticacaoService;
 		this.produtoRepository = produtoRepository;
 		this.perguntaRepository = perguntaRepository;
-		this.emailService = emailService;
+		this.mailSender = mailSender;
 	}
 	
 	@PostMapping("/{id}")
@@ -49,7 +39,7 @@ public class PerguntaController {
 		Pergunta pergunta = request.converte(usuario, produto.get());
 		
 		perguntaRepository.save(pergunta);
-		pergunta.envia(emailService);
+		pergunta.envia(mailSender);
 		
 		return ResponseEntity.ok().build();
 	}

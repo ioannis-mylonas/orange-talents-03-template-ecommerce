@@ -1,9 +1,9 @@
 package bootcamp.mercado.pergunta;
 
-import javax.validation.constraints.NotBlank;
-
 import bootcamp.mercado.produto.Produto;
 import bootcamp.mercado.usuario.Usuario;
+
+import javax.validation.constraints.NotBlank;
 
 public class PerguntaRequest {
 	@NotBlank

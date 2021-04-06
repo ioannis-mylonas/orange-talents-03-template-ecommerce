@@ -1,8 +1,8 @@
 package bootcamp.mercado.autenticacao;
 
-import javax.validation.constraints.NotBlank;
-
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+
+import javax.validation.constraints.NotBlank;
 
 public class LoginRequest {
 	@NotBlank

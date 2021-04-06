@@ -1,9 +1,5 @@
 package bootcamp.mercado.produto;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
-import java.util.List;
-
 import bootcamp.mercado.caracteristica.ProdutoDetalheCaracteristicaResponse;
 import bootcamp.mercado.foto.ProdutoDetalheFotoResponse;
 import bootcamp.mercado.opiniao.Opiniao;
@@ -11,6 +7,10 @@ import bootcamp.mercado.opiniao.ProdutoDetalheOpiniaoResponse;
 import bootcamp.mercado.pergunta.Pergunta;
 import bootcamp.mercado.pergunta.ProdutoDetalhePerguntaResponse;
 import bootcamp.mercado.usuario.ProdutoDetalheUsuarioResponse;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.util.List;
 
 public class ProdutoDetalheResponse {
 	private List<ProdutoDetalheFotoResponse> fotos;

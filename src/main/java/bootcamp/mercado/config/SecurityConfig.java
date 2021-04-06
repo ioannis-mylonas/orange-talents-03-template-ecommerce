@@ -1,5 +1,7 @@
 package bootcamp.mercado.config;
 
+import bootcamp.mercado.autenticacao.UsuarioLogin;
+import bootcamp.mercado.usuario.UsuarioRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -14,21 +16,19 @@ import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import bootcamp.mercado.usuario.UsuarioRepository;
-
 @EnableWebSecurity
 @Configuration
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
-	private AutenticacaoService autenticacaoService;
+	private UsuarioLogin usuarioLogin;
 	private TokenService tokenService;
 	private UsuarioRepository usuarioRepository;
 	
-	public SecurityConfig(AutenticacaoService autenticacaoService,
-			TokenService tokenService,
-			UsuarioRepository usuarioRepository) {
+	public SecurityConfig(UsuarioLogin usuarioLogin,
+						  TokenService tokenService,
+						  UsuarioRepository usuarioRepository) {
 		
-		this.autenticacaoService = autenticacaoService;
+		this.usuarioLogin = usuarioLogin;
 		this.tokenService = tokenService;
 		this.usuarioRepository = usuarioRepository;
 	}
@@ -46,7 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(autenticacaoService);
+		auth.userDetailsService(usuarioLogin);
 	}
 	
 	@Override

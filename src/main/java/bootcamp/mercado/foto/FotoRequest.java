@@ -1,13 +1,11 @@
 package bootcamp.mercado.foto;
 
-import java.net.URI;
-import java.util.List;
-import java.util.stream.Collectors;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import org.springframework.web.multipart.MultipartFile;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class FotoRequest {
 	@NotNull @Size(min = 1)

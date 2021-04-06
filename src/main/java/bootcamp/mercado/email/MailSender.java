@@ -1,5 +1,5 @@
 package bootcamp.mercado.email;
 
-public interface EmailService {
+public interface MailSender {
 	void envia(String mensagem, String destinatario);
 }

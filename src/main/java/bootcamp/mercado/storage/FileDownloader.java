@@ -1,10 +1,10 @@
 package bootcamp.mercado.storage;
 
-import java.util.List;
-
 import org.springframework.web.multipart.MultipartFile;
 
-public interface StorageService {
+import java.util.List;
+
+public interface FileDownloader {
 	String save(MultipartFile resource);
 	List<String> saveAll(List<MultipartFile> resources);
 }

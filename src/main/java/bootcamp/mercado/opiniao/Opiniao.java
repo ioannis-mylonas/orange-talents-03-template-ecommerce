@@ -1,16 +1,9 @@
 package bootcamp.mercado.opiniao;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
-
 import bootcamp.mercado.produto.Produto;
 import bootcamp.mercado.usuario.Usuario;
+
+import javax.persistence.*;
 
 @Entity
 public class Opiniao {

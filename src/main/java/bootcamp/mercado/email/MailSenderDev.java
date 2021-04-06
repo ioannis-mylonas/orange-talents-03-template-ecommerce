@@ -3,7 +3,7 @@ package bootcamp.mercado.email;
 import org.springframework.stereotype.Service;
 
 @Service
-public class EmailServiceDev implements EmailService {
+public class MailSenderDev implements MailSender {
 
 	@Override
 	public void envia(String mensagem, String destinatario) {

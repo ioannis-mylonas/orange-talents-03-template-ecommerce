@@ -1,12 +1,8 @@
 package bootcamp.mercado.foto;
 
-import java.io.IOException;
-import java.net.URI;
-import java.util.List;
-import java.util.Optional;
-
-import javax.validation.Valid;
-
+import bootcamp.mercado.produto.Produto;
+import bootcamp.mercado.produto.ProdutoRepository;
+import bootcamp.mercado.storage.FileDownloader;
 import bootcamp.mercado.usuario.Usuario;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,10 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import bootcamp.mercado.config.AutenticacaoService;
-import bootcamp.mercado.produto.Produto;
-import bootcamp.mercado.produto.ProdutoRepository;
-import bootcamp.mercado.storage.StorageService;
+import javax.validation.Valid;
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/fotos")
@@ -27,16 +22,13 @@ public class FotoController {
 	
 	private ProdutoRepository produtoRepository;
 	private FotoRepository fotoRepository;
-	private AutenticacaoService authService;
-	private StorageService storage;
+	private FileDownloader storage;
 
 	public FotoController(ProdutoRepository produtoRepository,
 			FotoRepository fotoRepository,
-			AutenticacaoService authService,
-			StorageService storage) {
+			FileDownloader storage) {
 		
 		this.produtoRepository = produtoRepository;
-		this.authService = authService;
 		this.storage = storage;
 		this.fotoRepository = fotoRepository;
 	}
@@ -50,7 +42,7 @@ public class FotoController {
 		
 		if (produto.isEmpty()) return ResponseEntity.notFound().build();
 		
-		if (!authService.isUser(produto.get().getDono(), usuario)) {
+		if (produto.get().getDono() == usuario) {
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 		}
 		
