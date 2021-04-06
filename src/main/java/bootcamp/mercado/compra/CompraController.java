@@ -52,8 +52,8 @@ public class CompraController {
         Optional<Produto> produto = produtoRepository.findById(request.getProdutoId());
         Assert.isTrue(produto.isPresent(), tag + "Produto inexistente!");
 
-        Gateway gateway = gatewayList.getGateway(request.getGateway());
-        Assert.isTrue(gateway != null, tag + "Gateway inexistente!");
+        Optional<Gateway> gateway = gatewayList.getGateway(request.getGateway());
+        Assert.isTrue(gateway.isPresent(), tag + "Gateway inexistente!");
 
         Compra compra = request.converte(usuario, produto.get());
         compraRepository.save(compra);
@@ -63,7 +63,7 @@ public class CompraController {
         String returnUrl = uriComponentsBuilder
                 .path("/").toUriString();
 
-        String targetUrl = gateway.gerarURI(compra, returnUrl);
+        String targetUrl = gateway.get().gerarURI(compra, returnUrl);
 
         mailSender.envia("Compra efetuada!", compra.getUsuario().getLogin());
         return ResponseEntity.status(HttpStatus.FOUND).body(targetUrl);

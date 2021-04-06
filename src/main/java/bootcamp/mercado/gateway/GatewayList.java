@@ -3,6 +3,7 @@ package bootcamp.mercado.gateway;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
+import java.util.Optional;
 
 @Component
 public class GatewayList {
@@ -12,17 +13,14 @@ public class GatewayList {
         this.gateways = gateways;
     }
 
-    public Gateway getGateway(String nome) {
-        for (Gateway gateway : gateways) {
-            if (gateway.isGateway(nome)) return gateway;
-        }
-        return null;
+    public Optional<Gateway> getGateway(String nome) {
+        return gateways.stream()
+                .filter(i -> { return i.isGateway(nome); })
+                .findFirst();
     }
 
     public Boolean exists(String nome) {
-        for (Gateway gateway : gateways) {
-            if (gateway.isGateway(nome)) return true;
-        }
-        return false;
+        return gateways.stream()
+                .anyMatch(i -> { return i.isGateway(nome); });
     }
 }
