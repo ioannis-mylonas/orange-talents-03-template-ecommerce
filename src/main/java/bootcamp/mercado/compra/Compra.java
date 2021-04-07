@@ -57,4 +57,13 @@ public class Compra {
     public Integer getQuantidade() {
         return quantidade;
     }
+
+    public CompraStatus getStatus() {
+        return status;
+    }
+
+    public void mudaStatus(CompraStatus status) {
+        if (this.status != CompraStatus.SUCESSO)
+            this.status = status;
+    }
 }
