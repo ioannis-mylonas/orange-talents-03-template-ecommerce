@@ -5,10 +5,12 @@ import bootcamp.mercado.compra.Compra;
 public abstract class Gateway {
     protected String nome;
     protected String baseUri;
+    protected String redirectPath;
 
-    public Gateway(String nome, String baseUri) {
+    public Gateway(String nome, String baseUri, String redirectPath) {
         this.nome = nome;
         this.baseUri = baseUri;
+        this.redirectPath = redirectPath;
     }
 
     public boolean isGateway(String value) {
@@ -19,4 +21,6 @@ public abstract class Gateway {
     public String getNome() {
         return nome;
     }
+
+    public String getRedirectPath() { return redirectPath; }
 }

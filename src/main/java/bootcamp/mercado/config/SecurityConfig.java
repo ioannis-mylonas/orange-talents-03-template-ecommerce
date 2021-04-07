@@ -51,15 +51,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-			.antMatchers(HttpMethod.POST, "/usuarios").permitAll()
-			.antMatchers(HttpMethod.POST, "/auth").permitAll()
-			.antMatchers("/h2-console/**").permitAll()
-			.anyRequest().authenticated()
-			.and().headers().frameOptions().disable()
-			.and().csrf().disable()
-			.sessionManagement()
-			.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-			.and().addFilterBefore(new TokenAuthFilter(usuarioRepository, tokenBuilder),
-					UsernamePasswordAuthenticationFilter.class);
+				.antMatchers(HttpMethod.POST, "/usuarios").permitAll()
+				.antMatchers(HttpMethod.POST, "/auth").permitAll()
+				.antMatchers(HttpMethod.POST, "/nf").permitAll()
+				.antMatchers(HttpMethod.POST, "/ranking").permitAll()
+				.antMatchers("/h2-console/**").permitAll()
+				.anyRequest().authenticated()
+				.and().headers().frameOptions().disable()
+				.and().csrf().disable()
+				.sessionManagement()
+				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+				.and().addFilterBefore(new TokenAuthFilter(usuarioRepository, tokenBuilder),
+				UsernamePasswordAuthenticationFilter.class);
 	}
 }

@@ -7,7 +7,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 @Component
 public class PaypalGateway extends Gateway {
     public PaypalGateway() {
-        super("Paypal", "paypal.com");
+        super("Paypal",
+                "paypal.com", "/pagamentos/paypal");
     }
 
     @Override

@@ -12,7 +12,7 @@ public enum PagseguroStatus {
         this.value = value;
     }
 
-    public CompraStatus getValue() {
+    public CompraStatus getStatus() {
         return value;
     }
 }

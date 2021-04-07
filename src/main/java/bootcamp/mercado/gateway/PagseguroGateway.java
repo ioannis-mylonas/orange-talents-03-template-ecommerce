@@ -7,7 +7,8 @@ import org.springframework.web.util.UriComponentsBuilder;
 @Component
 public class PagseguroGateway extends Gateway {
     public PagseguroGateway() {
-        super("Pagseguro", "pagseguro.com");
+        super("Pagseguro",
+                "pagseguro.com", "/pagamentos/pagseguro");
     }
 
     @Override
