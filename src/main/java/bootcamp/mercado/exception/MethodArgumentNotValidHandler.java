@@ -18,8 +18,6 @@ public class MethodArgumentNotValidHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public FieldErrorListResponse handle(MethodArgumentNotValidException ex) {
-        return new FieldErrorListResponse(ex.getFieldErrors(),
-                ex.getAllErrors(),
-                messageSource);
+        return new FieldErrorListResponse(ex.getFieldErrors(), messageSource);
     }
 }

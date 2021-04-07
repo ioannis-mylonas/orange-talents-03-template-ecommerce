@@ -2,48 +2,33 @@ package bootcamp.mercado.validator;
 
 import bootcamp.mercado.compra.CompraRequest;
 import bootcamp.mercado.produto.Produto;
-import org.springframework.util.Assert;
+import bootcamp.mercado.produto.ProdutoRepository;
+import org.springframework.validation.Errors;
+import org.springframework.validation.Validator;
 
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
-import javax.validation.ConstraintValidator;
-import javax.validation.ConstraintValidatorContext;
-import java.util.List;
+import java.util.Optional;
 
-public class EstoqueValidator implements ConstraintValidator<Estoque, CompraRequest> {
-    private final EntityManager entityManager;
-    private final String tag = "[EstoqueValidator] ";
+public class EstoqueValidator implements Validator {
+    private ProdutoRepository produtoRepository;
 
-    private Class<?> target;
-    private String field;
-
-    public EstoqueValidator(EntityManager entityManager) {
-        this.entityManager = entityManager;
+    public EstoqueValidator(ProdutoRepository produtoRepository) {
+        this.produtoRepository = produtoRepository;
     }
 
     @Override
-    public void initialize(Estoque constraint) {
-        this.target = constraint.target();
-        this.field = constraint.field();
+    public boolean supports(Class<?> target) {
+        return target.isAssignableFrom(CompraRequest.class);
     }
 
     @Override
-    public boolean isValid(CompraRequest value, ConstraintValidatorContext context) {
-        Integer quantidade = value.getQuantidade();
-        Long produtoId = value.getProdutoId();
+    public void validate(Object target, Errors errors) {
+        CompraRequest request = (CompraRequest) target;
+        Optional<Produto> produto = produtoRepository.findById(request.getProdutoId());
+        if (produto.isEmpty()) return;
 
-        String q = String.format("SELECT s FROM %s s WHERE %s=:value",
-                target.getName(), field);
-
-        Query query = entityManager.createQuery(q);
-        query.setParameter("value", produtoId);
-
-        List<?> res = query.getResultList();
-        Assert.isTrue(res.size() <= 1, tag + "Estado inválido: Id do produto duplicado!");
-
-        if (res.isEmpty()) return false;
-        Produto produto = (Produto) res.stream().findFirst().get();
-
-        return produto.getQuantidade() >= quantidade;
+        if (request.getQuantidade() > produto.get().getQuantidade())
+            errors.rejectValue("quantidade",
+                    "EstoqueValidator",
+                    "Estoque insuficiente para compra.");
     }
 }

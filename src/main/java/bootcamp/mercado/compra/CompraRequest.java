@@ -2,7 +2,6 @@ package bootcamp.mercado.compra;
 
 import bootcamp.mercado.produto.Produto;
 import bootcamp.mercado.usuario.Usuario;
-import bootcamp.mercado.validator.Estoque;
 import bootcamp.mercado.validator.Exists;
 import bootcamp.mercado.validator.GatewayExists;
 
@@ -10,7 +9,6 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-@Estoque
 public class CompraRequest {
     @NotBlank @GatewayExists
     private final String gateway;

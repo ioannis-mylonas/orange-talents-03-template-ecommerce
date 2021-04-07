@@ -8,32 +8,18 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class FieldErrorListResponse {
-    List<ObjectErrorResponse> objectErrors;
-    List<FieldErrorResponse> fieldErrors;
+    List<FieldErrorResponse> errors;
 
-    public FieldErrorListResponse(List<FieldError> fieldErrors,
-                                  List<ObjectError> objectErrors,
+    public FieldErrorListResponse(List<FieldError> errors,
                                   MessageSource messageSource) {
 
-        this.fieldErrors = fieldErrors.stream()
+        this.errors = errors.stream()
                 .map(i -> { return new FieldErrorResponse(i, messageSource); })
                 .collect(Collectors.toList());
-
-        /**
-         * Adiciona apenas as mensagens de erros que não sejam
-         * FieldError, como validações de classe ou método
-         */
-        this.objectErrors = objectErrors.stream()
-                .filter(i -> { return !(i instanceof FieldError); })
-                .map(i -> { return new ObjectErrorResponse(i, messageSource); })
-                .collect(Collectors.toList());
     }
 
-    public List<FieldErrorResponse> getFieldErrors() {
-        return fieldErrors;
+    public List<FieldErrorResponse> getErrors() {
+        return errors;
     }
 
-    public List<ObjectErrorResponse> getObjectErrors() {
-        return objectErrors;
-    }
 }

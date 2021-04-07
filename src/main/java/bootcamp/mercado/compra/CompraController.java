@@ -6,14 +6,13 @@ import bootcamp.mercado.gateway.GatewayList;
 import bootcamp.mercado.produto.Produto;
 import bootcamp.mercado.produto.ProdutoRepository;
 import bootcamp.mercado.usuario.Usuario;
+import bootcamp.mercado.validator.EstoqueValidator;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.util.Assert;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.transaction.Transactional;
@@ -67,5 +66,12 @@ public class CompraController {
 
         mailSender.envia("Compra efetuada!", compra.getUsuario().getLogin());
         return ResponseEntity.status(HttpStatus.FOUND).body(targetUrl);
+    }
+
+    @InitBinder
+    public void addValidators(WebDataBinder binder) {
+        binder.addValidators(
+                new EstoqueValidator(produtoRepository)
+        );
     }
 }
