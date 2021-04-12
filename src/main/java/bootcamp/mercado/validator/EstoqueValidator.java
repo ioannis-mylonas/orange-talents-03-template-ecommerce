@@ -1,6 +1,6 @@
 package bootcamp.mercado.validator;
 
-import bootcamp.mercado.compra.CompraRequest;
+import bootcamp.mercado.produto.compra.CompraRequest;
 import bootcamp.mercado.produto.Produto;
 import bootcamp.mercado.produto.ProdutoRepository;
 import org.springframework.validation.Errors;

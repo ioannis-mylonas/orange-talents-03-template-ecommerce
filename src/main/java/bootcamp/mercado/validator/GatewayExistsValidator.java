@@ -1,6 +1,6 @@
 package bootcamp.mercado.validator;
 
-import bootcamp.mercado.gateway.GatewayList;
+import bootcamp.mercado.produto.compra.gateway.GatewayList;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

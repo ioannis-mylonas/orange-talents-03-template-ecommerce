@@ -1,7 +1,7 @@
 package bootcamp.mercado.config;
 
-import bootcamp.mercado.autenticacao.TokenBuilder;
-import bootcamp.mercado.autenticacao.UsuarioLogin;
+import bootcamp.mercado.usuario.autenticacao.TokenBuilder;
+import bootcamp.mercado.usuario.autenticacao.UsuarioLogin;
 import bootcamp.mercado.usuario.UsuarioRepository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

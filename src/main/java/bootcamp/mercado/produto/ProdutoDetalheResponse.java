@@ -1,11 +1,11 @@
 package bootcamp.mercado.produto;
 
-import bootcamp.mercado.caracteristica.ProdutoDetalheCaracteristicaResponse;
-import bootcamp.mercado.foto.ProdutoDetalheFotoResponse;
-import bootcamp.mercado.opiniao.Opiniao;
-import bootcamp.mercado.opiniao.ProdutoDetalheOpiniaoResponse;
-import bootcamp.mercado.pergunta.Pergunta;
-import bootcamp.mercado.pergunta.ProdutoDetalhePerguntaResponse;
+import bootcamp.mercado.produto.caracteristica.ProdutoDetalheCaracteristicaResponse;
+import bootcamp.mercado.produto.foto.ProdutoDetalheFotoResponse;
+import bootcamp.mercado.produto.opiniao.Opiniao;
+import bootcamp.mercado.produto.opiniao.ProdutoDetalheOpiniaoResponse;
+import bootcamp.mercado.produto.pergunta.Pergunta;
+import bootcamp.mercado.produto.pergunta.ProdutoDetalhePerguntaResponse;
 import bootcamp.mercado.usuario.ProdutoDetalheUsuarioResponse;
 
 import java.math.BigDecimal;

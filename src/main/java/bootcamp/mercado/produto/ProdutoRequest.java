@@ -1,9 +1,9 @@
 package bootcamp.mercado.produto;
 
-import bootcamp.mercado.caracteristica.Caracteristica;
-import bootcamp.mercado.caracteristica.CaracteristicaRequest;
-import bootcamp.mercado.categoria.Categoria;
-import bootcamp.mercado.categoria.CategoriaRepository;
+import bootcamp.mercado.produto.caracteristica.Caracteristica;
+import bootcamp.mercado.produto.caracteristica.CaracteristicaRequest;
+import bootcamp.mercado.produto.categoria.Categoria;
+import bootcamp.mercado.produto.categoria.CategoriaRepository;
 import bootcamp.mercado.usuario.Usuario;
 import bootcamp.mercado.validator.Exists;
 

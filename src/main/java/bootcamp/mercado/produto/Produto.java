@@ -1,8 +1,8 @@
 package bootcamp.mercado.produto;
 
-import bootcamp.mercado.caracteristica.Caracteristica;
-import bootcamp.mercado.categoria.Categoria;
-import bootcamp.mercado.foto.Foto;
+import bootcamp.mercado.produto.caracteristica.Caracteristica;
+import bootcamp.mercado.produto.categoria.Categoria;
+import bootcamp.mercado.produto.foto.Foto;
 import bootcamp.mercado.usuario.Usuario;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.util.Assert;

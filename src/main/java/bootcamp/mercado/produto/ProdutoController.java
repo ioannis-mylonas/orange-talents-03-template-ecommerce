@@ -1,11 +1,11 @@
 package bootcamp.mercado.produto;
 
-import bootcamp.mercado.caracteristica.CaracteristicaRepository;
-import bootcamp.mercado.categoria.CategoriaRepository;
-import bootcamp.mercado.opiniao.Opiniao;
-import bootcamp.mercado.opiniao.OpiniaoRepository;
-import bootcamp.mercado.pergunta.Pergunta;
-import bootcamp.mercado.pergunta.PerguntaRepository;
+import bootcamp.mercado.produto.caracteristica.CaracteristicaRepository;
+import bootcamp.mercado.produto.categoria.CategoriaRepository;
+import bootcamp.mercado.produto.opiniao.Opiniao;
+import bootcamp.mercado.produto.opiniao.OpiniaoRepository;
+import bootcamp.mercado.produto.pergunta.Pergunta;
+import bootcamp.mercado.produto.pergunta.PerguntaRepository;
 import bootcamp.mercado.usuario.Usuario;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

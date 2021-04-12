@@ -1,6 +1,6 @@
 package bootcamp.mercado.endpointfake;
 
-import bootcamp.mercado.compra.Compra;
+import bootcamp.mercado.produto.compra.Compra;
 import bootcamp.mercado.usuario.Usuario;
 import bootcamp.mercado.validator.Exists;
 
