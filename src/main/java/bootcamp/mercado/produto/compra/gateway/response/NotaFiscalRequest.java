@@ -1,12 +1,10 @@
 package bootcamp.mercado.produto.compra.gateway.response;
 
-import javax.validation.constraints.NotNull;
-
 public class NotaFiscalRequest {
-    private Long idCompra;
-    private Long idUsuario;
+    private final Long idCompra;
+    private final Long idUsuario;
 
-    public NotaFiscalRequest(@NotNull Long idCompra, @NotNull Long idUsuario) {
+    public NotaFiscalRequest(Long idCompra, Long idUsuario) {
         this.idCompra = idCompra;
         this.idUsuario = idUsuario;
     }

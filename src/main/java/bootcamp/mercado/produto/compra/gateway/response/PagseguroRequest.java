@@ -39,4 +39,8 @@ public class PagseguroRequest implements TransacaoRequest {
     public Long getCompraId() {
         return compraId;
     }
+
+    public String getPagamentoId() {
+        return pagamentoId;
+    }
 }

@@ -21,8 +21,16 @@ public class Categoria {
 	public void setParente(Categoria parente) {
 		this.parente = parente;
 	}
-	
+
+	public Categoria getParente() {
+		return parente;
+	}
+
 	public Long getId() {
 		return id;
+	}
+
+	public String getNome() {
+		return nome;
 	}
 }

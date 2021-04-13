@@ -27,6 +27,8 @@ public class UniqueValidator implements ConstraintValidator<Unique, Object> {
 	}
 	
 	public boolean validate(Object value, Class<?> target, String field) {
+		if (value == null) return true;
+
 		String q = String.format("SELECT 1 FROM %s s WHERE lower(trim(s.%s))=lower(trim(:value))",
 				target.getName(), field);
 		
