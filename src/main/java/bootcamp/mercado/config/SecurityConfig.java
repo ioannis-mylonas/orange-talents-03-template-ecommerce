@@ -59,7 +59,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers(HttpMethod.GET, "/paypal-endpointfake").permitAll()
 				.antMatchers(HttpMethod.POST, "/pagamentos/paypal").permitAll()
 				.antMatchers(HttpMethod.POST, "/pagamentos/pagseguro").permitAll()
-				.antMatchers(HttpMethod.GET, "/**").permitAll()
 				.antMatchers("/h2-console/**").permitAll()
 				.anyRequest().authenticated()
 				.and().headers().frameOptions().disable()
