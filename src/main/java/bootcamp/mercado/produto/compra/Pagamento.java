@@ -8,7 +8,8 @@ import java.time.LocalDateTime;
 
 @Entity
 public class Pagamento {
-    @Id
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
     private String pagamentoId;
     @ManyToOne
     private Compra compra;
