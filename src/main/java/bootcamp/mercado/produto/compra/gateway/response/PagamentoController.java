@@ -2,6 +2,7 @@ package bootcamp.mercado.produto.compra.gateway.response;
 
 import bootcamp.mercado.produto.compra.Compra;
 import bootcamp.mercado.produto.compra.CompraStatus;
+import bootcamp.mercado.produto.compra.Pagamento;
 import bootcamp.mercado.produto.compra.gateway.Gateway;
 import bootcamp.mercado.produto.compra.gateway.GatewayList;
 import io.jsonwebtoken.lang.Assert;
@@ -41,12 +42,11 @@ public abstract class PagamentoController<T extends TransacaoRequest> {
         Assert.isTrue(compra != null, tag + "Compra é null!");
 
         Gateway gateway = gatewayList.getGateway(gatewayId).get();
-        Pagamento pagamento = request.converte(gateway);
+        Pagamento pagamento = request.converte(gateway, compra);
 
         if (request.getStatus() == CompraStatus.SUCESSO) {
             processaPagamento.sucesso(compra,
-                    pagamento, request.getStatus(),
-                    gateway, uriComponentsBuilder);
+                    pagamento, gateway, uriComponentsBuilder);
 
         } else if(request.getStatus() == CompraStatus.FALHA) {
             String redirectUri = uriComponentsBuilder
@@ -54,10 +54,7 @@ public abstract class PagamentoController<T extends TransacaoRequest> {
                     .toUriString();
 
             processaPagamento.falha(compra,
-                    pagamento,
-                    request.getStatus(),
-                    gateway,
-                    redirectUri);
+                    pagamento, gateway, redirectUri);
         }
     }
 }

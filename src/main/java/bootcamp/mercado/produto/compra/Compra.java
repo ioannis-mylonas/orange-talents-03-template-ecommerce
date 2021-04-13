@@ -5,6 +5,8 @@ import bootcamp.mercado.usuario.Usuario;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Entity
 public class Compra {
@@ -27,6 +29,8 @@ public class Compra {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private CompraStatus status;
+    @OneToMany(mappedBy = "compra", cascade = CascadeType.MERGE)
+    private Set<Pagamento> pagamentos;
 
     @Deprecated
     public Compra() {}
@@ -62,8 +66,20 @@ public class Compra {
         return status;
     }
 
-    public void mudaStatus(CompraStatus status) {
-        if (this.status != CompraStatus.SUCESSO)
-            this.status = status;
+    public Set<Pagamento> getPagamentosSucesso() {
+        return pagamentos.stream()
+                .filter(i -> i.getStatus().equals(CompraStatus.SUCESSO))
+                .collect(Collectors.toSet());
+    }
+
+    public void adicionaPagamento(Pagamento pagamento) {
+        Set<Pagamento> sucessos = getPagamentosSucesso();
+
+        if (sucessos.size() < 1) {
+            pagamentos.add(pagamento);
+            if (pagamento.getStatus().equals(CompraStatus.SUCESSO)) {
+                status = CompraStatus.SUCESSO;
+            }
+        }
     }
 }

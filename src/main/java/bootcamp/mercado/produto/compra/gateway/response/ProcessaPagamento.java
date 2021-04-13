@@ -2,27 +2,30 @@ package bootcamp.mercado.produto.compra.gateway.response;
 
 import bootcamp.mercado.email.MercadoMailSender;
 import bootcamp.mercado.produto.compra.Compra;
+import bootcamp.mercado.produto.compra.CompraRepository;
 import bootcamp.mercado.produto.compra.CompraStatus;
+import bootcamp.mercado.produto.compra.Pagamento;
 import bootcamp.mercado.produto.compra.gateway.Gateway;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 import java.net.URI;
 
 @Component
 public class ProcessaPagamento {
-    private final EntityManager entityManager;
+    private final CompraRepository compraRepository;
     private final MercadoMailSender mailSender;
     private final NotaFiscalClient nfClient;
     private final VendedorRankingClient vrClient;
 
-    public ProcessaPagamento(EntityManager entityManager,
+    public ProcessaPagamento(CompraRepository compraRepository,
                              MercadoMailSender mailSender,
                              NotaFiscalClient nfClient,
                              VendedorRankingClient vrClient) {
 
-        this.entityManager = entityManager;
+        this.compraRepository = compraRepository;
         this.mailSender = mailSender;
         this.nfClient = nfClient;
         this.vrClient = vrClient;
@@ -70,31 +73,28 @@ public class ProcessaPagamento {
         ), "Pagamento inválido!", compra.getUsuario().getLogin());
     }
 
-    private void save(Pagamento pagamento, Compra compra, CompraStatus status) {
-        entityManager.persist(pagamento);
-        compra.mudaStatus(status);
-    }
-
+    @Transactional
     public void sucesso(Compra compra,
                         Pagamento pagamento,
-                        CompraStatus status,
                         Gateway gateway,
                         UriComponentsBuilder uriBuilder) {
 
-        save(pagamento, compra, status);
+        compra.adicionaPagamento(pagamento);
+        compraRepository.save(compra);
 
         notaFiscal(compra, pagamento, uriBuilder);
         rankingVendedores(compra, gateway, uriBuilder);
         emailSucesso(compra);
     }
 
+    @Transactional
     public void falha(Compra compra,
                       Pagamento pagamento,
-                      CompraStatus status,
                       Gateway gateway,
                       String redirectUri) {
 
-        save(pagamento, compra, status);
+        compra.adicionaPagamento(pagamento);
+        compraRepository.save(compra);
         emailFalha(compra, gateway, redirectUri);
     }
 }

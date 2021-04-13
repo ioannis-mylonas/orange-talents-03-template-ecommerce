@@ -2,6 +2,7 @@ package bootcamp.mercado.produto.compra.gateway.response;
 
 import bootcamp.mercado.produto.compra.Compra;
 import bootcamp.mercado.produto.compra.CompraStatus;
+import bootcamp.mercado.produto.compra.Pagamento;
 import bootcamp.mercado.produto.compra.gateway.Gateway;
 import bootcamp.mercado.validator.Exists;
 import bootcamp.mercado.validator.TransacaoIncompleta;
@@ -24,8 +25,8 @@ public class PagseguroRequest implements TransacaoRequest {
         this.status = status;
     }
 
-    public Pagamento converte(Gateway gateway) {
-        return new Pagamento(compraId,
+    public Pagamento converte(Gateway gateway, Compra compra) {
+        return new Pagamento(compra,
                 gateway.getNome(),
                 pagamentoId,
                 status.getStatus());
