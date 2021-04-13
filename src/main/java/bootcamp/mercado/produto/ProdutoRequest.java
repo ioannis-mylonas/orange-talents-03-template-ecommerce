@@ -49,7 +49,7 @@ public class ProdutoRequest {
 				.map(i -> { return i.converte(); })
 				.collect(Collectors.toList());
 		
-		Categoria categoriaObj = categoriaRepository.findByNome(categoria).get();
+		Categoria categoriaObj = categoriaRepository.findByNomeIgnoreCase(categoria).get();
 		
 		return new Produto(nome, preco, quantidade,
 				descricao, caracteristicasObj, categoriaObj, dono);

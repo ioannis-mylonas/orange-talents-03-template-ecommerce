@@ -20,7 +20,7 @@ public class CategoriaRequest {
 		Categoria categoria = new Categoria(nome);
 		
 		if (parente != null) categoria.setParente(
-				repository.findByNome(parente).get());
+				repository.findByNomeIgnoreCase(parente).get());
 		
 		return categoria;
 	}
