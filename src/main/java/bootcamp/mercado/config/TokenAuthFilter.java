@@ -1,9 +1,9 @@
 package bootcamp.mercado.config;
 
-import bootcamp.mercado.usuario.autenticacao.Token;
-import bootcamp.mercado.usuario.autenticacao.TokenBuilder;
 import bootcamp.mercado.usuario.Usuario;
 import bootcamp.mercado.usuario.UsuarioRepository;
+import bootcamp.mercado.usuario.autenticacao.Token;
+import bootcamp.mercado.usuario.autenticacao.TokenParser;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -18,11 +18,11 @@ import java.util.Optional;
 public class TokenAuthFilter extends OncePerRequestFilter {
 	
 	private UsuarioRepository repository;
-	private TokenBuilder tokenBuilder;
+	private TokenParser tokenParser;
 
-	public TokenAuthFilter(UsuarioRepository repository, TokenBuilder tokenBuilder) {
+	public TokenAuthFilter(UsuarioRepository repository, TokenParser tokenParser) {
 		this.repository = repository;
-		this.tokenBuilder = tokenBuilder;
+		this.tokenParser = tokenParser;
 	}
 
 	@Override
@@ -44,7 +44,7 @@ public class TokenAuthFilter extends OncePerRequestFilter {
 	}
 	
 	private void autentica(String token) {
-		Token res = tokenBuilder.parse(token);
+		Token res = tokenParser.parse(token);
 		if (res == null) return;
 
 		Optional<Usuario> usuario = repository.findById(res.getId());

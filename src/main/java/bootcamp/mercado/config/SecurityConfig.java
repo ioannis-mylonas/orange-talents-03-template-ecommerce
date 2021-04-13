@@ -1,8 +1,8 @@
 package bootcamp.mercado.config;
 
-import bootcamp.mercado.usuario.autenticacao.TokenBuilder;
-import bootcamp.mercado.usuario.autenticacao.UsuarioLogin;
 import bootcamp.mercado.usuario.UsuarioRepository;
+import bootcamp.mercado.usuario.autenticacao.TokenParser;
+import bootcamp.mercado.usuario.autenticacao.UsuarioLogin;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -21,15 +21,15 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private UsuarioLogin usuarioLogin;
 	private UsuarioRepository usuarioRepository;
-	private TokenBuilder tokenBuilder;
+	private TokenParser tokenParser;
 
 	public SecurityConfig(UsuarioLogin usuarioLogin,
 						  UsuarioRepository usuarioRepository,
-						  TokenBuilder tokenBuilder) {
+						  TokenParser tokenParser) {
 
 		this.usuarioLogin = usuarioLogin;
 		this.usuarioRepository = usuarioRepository;
-		this.tokenBuilder = tokenBuilder;
+		this.tokenParser = tokenParser;
 	}
 
 	@Bean
@@ -55,13 +55,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers(HttpMethod.POST, "/auth").permitAll()
 				.antMatchers(HttpMethod.POST, "/nf").permitAll()
 				.antMatchers(HttpMethod.POST, "/ranking").permitAll()
+				.antMatchers(HttpMethod.GET, "/pagseguro-endpointfake").permitAll()
+				.antMatchers(HttpMethod.GET, "/paypal-endpointfake").permitAll()
+				.antMatchers(HttpMethod.POST, "/pagamentos/paypal").permitAll()
+				.antMatchers(HttpMethod.POST, "/pagamentos/pagseguro").permitAll()
+				.antMatchers(HttpMethod.GET, "/**").permitAll()
 				.antMatchers("/h2-console/**").permitAll()
 				.anyRequest().authenticated()
 				.and().headers().frameOptions().disable()
 				.and().csrf().disable()
 				.sessionManagement()
 				.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-				.and().addFilterBefore(new TokenAuthFilter(usuarioRepository, tokenBuilder),
+				.and().addFilterBefore(new TokenAuthFilter(usuarioRepository, tokenParser),
 				UsernamePasswordAuthenticationFilter.class);
 	}
 }

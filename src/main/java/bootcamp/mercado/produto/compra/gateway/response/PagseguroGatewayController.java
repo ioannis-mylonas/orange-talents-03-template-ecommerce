@@ -1,6 +1,6 @@
 package bootcamp.mercado.produto.compra.gateway.response;
 
-import bootcamp.mercado.produto.compra.gateway.PagseguroGateway;
+import bootcamp.mercado.produto.compra.gateway.GatewayList;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -12,9 +12,9 @@ public class PagseguroGatewayController extends PagamentoController<PagseguroReq
 
     public PagseguroGatewayController(EntityManager entityManager,
                                       ProcessaPagamento processaPagamento,
-                                      PagseguroGateway gateway) {
+                                      GatewayList gatewayList) {
 
-        super(entityManager, gateway,
+        super(entityManager, gatewayList, "Pagseguro",
                 processaPagamento, "[PagseguroGatewayController] ");
     }
 }

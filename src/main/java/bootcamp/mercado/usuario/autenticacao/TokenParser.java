@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
-public class TokenBuilder {
+public class TokenParser {
     @Value("${orange.ecommerce-treino.secret}")
     private String secret;
     @Value("${orange.ecommerce-treino.expiration}")
@@ -13,7 +13,7 @@ public class TokenBuilder {
     @Value("${orange.ecommerce-treino.issuer}")
     private String issuer;
 
-    public Token build(Usuario usuario) {
+    public Token parse(Usuario usuario) {
         return new Token(usuario, secret, expiration, issuer);
     }
 

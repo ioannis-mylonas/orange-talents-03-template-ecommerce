@@ -1,10 +1,10 @@
 package bootcamp.mercado.produto.compra;
 
 import bootcamp.mercado.email.MailSender;
-import bootcamp.mercado.produto.compra.gateway.Gateway;
-import bootcamp.mercado.produto.compra.gateway.GatewayList;
 import bootcamp.mercado.produto.Produto;
 import bootcamp.mercado.produto.ProdutoRepository;
+import bootcamp.mercado.produto.compra.gateway.Gateway;
+import bootcamp.mercado.produto.compra.gateway.GatewayList;
 import bootcamp.mercado.usuario.Usuario;
 import bootcamp.mercado.validator.EstoqueValidator;
 import org.springframework.http.HttpStatus;
@@ -61,7 +61,7 @@ public class CompraController {
         produto.get().diminuirQuantidade(compra.getQuantidade());
 
         String returnUrl = uriComponentsBuilder
-                .path("/").toUriString();
+                .path(gateway.get().getRedirectPath()).toUriString();
 
         URI targetUrl = gateway.get().gerarURI(compra, returnUrl);
 

@@ -8,18 +8,18 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.net.URI;
 
 @Component
-@Profile("release")
-public class PagseguroGateway extends Gateway {
-    public PagseguroGateway() {
-        super("Pagseguro",
-                "www.pagseguro.com", "/pagamentos/pagseguro");
+@Profile("dev")
+public class PaypalGatewayDev extends Gateway {
+    public PaypalGatewayDev() {
+        super("Paypal",
+                "localhost", "/pagamentos/paypal");
     }
 
     @Override
     public URI gerarURI(Compra compra, String redirectUri) {
         return UriComponentsBuilder.newInstance()
-                .scheme("https").host(baseUri)
-                .queryParam("returnId", compra.getId())
+                .scheme("http").host(baseUri).port("8080").path("/paypal-endpointfake")
+                .queryParam("buyerId", compra.getId())
                 .queryParam("redirectUrl", redirectUri)
                 .build().encode().toUri();
     }

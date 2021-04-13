@@ -3,6 +3,7 @@ package bootcamp.mercado.produto.compra.gateway.response;
 import bootcamp.mercado.produto.compra.Compra;
 import bootcamp.mercado.produto.compra.CompraStatus;
 import bootcamp.mercado.produto.compra.gateway.Gateway;
+import bootcamp.mercado.produto.compra.gateway.GatewayList;
 import io.jsonwebtoken.lang.Assert;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,17 +15,19 @@ import javax.validation.Valid;
 
 public abstract class PagamentoController<T extends TransacaoRequest> {
     private final EntityManager entityManager;
-    private final Gateway gateway;
+    private final GatewayList gatewayList;
     private final ProcessaPagamento processaPagamento;
+    private final String gatewayId;
     private final String tag;
 
     public PagamentoController(EntityManager entityManager,
-                               Gateway gateway,
+                               GatewayList gatewayList, String gatewayId,
                                ProcessaPagamento processaPagamento,
                                String tag) {
 
         this.entityManager = entityManager;
-        this.gateway = gateway;
+        this.gatewayList = gatewayList;
+        this.gatewayId = gatewayId;
         this.processaPagamento = processaPagamento;
         this.tag = tag;
     }
@@ -37,6 +40,7 @@ public abstract class PagamentoController<T extends TransacaoRequest> {
         Compra compra = entityManager.find(Compra.class, request.getCompraId());
         Assert.isTrue(compra != null, tag + "Compra é null!");
 
+        Gateway gateway = gatewayList.getGateway(gatewayId).get();
         Pagamento pagamento = request.converte(gateway);
 
         if (request.getStatus() == CompraStatus.SUCESSO) {

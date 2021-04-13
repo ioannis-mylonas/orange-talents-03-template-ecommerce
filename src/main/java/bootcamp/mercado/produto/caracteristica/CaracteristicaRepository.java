@@ -1,7 +1,7 @@
 package bootcamp.mercado.produto.caracteristica;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface CaracteristicaRepository extends CrudRepository<Caracteristica, Long>{
+public interface CaracteristicaRepository extends JpaRepository<Caracteristica, Long> {
 
 }

@@ -1,32 +1,31 @@
 package bootcamp.mercado.produto.compra.gateway.response;
 
+import bootcamp.mercado.email.MailSender;
 import bootcamp.mercado.produto.compra.Compra;
 import bootcamp.mercado.produto.compra.CompraStatus;
-import bootcamp.mercado.email.MailSender;
 import bootcamp.mercado.produto.compra.gateway.Gateway;
-import bootcamp.mercado.http.HttpRequestSender;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.persistence.EntityManager;
 import java.net.URI;
-import java.net.http.HttpResponse;
 
 @Component
 public class ProcessaPagamento {
     private final EntityManager entityManager;
     private final MailSender mailSender;
-    private final HttpRequestSender httpRequestSender;
+    private final NotaFiscalClient nfClient;
+    private final VendedorRankingClient vrClient;
 
     public ProcessaPagamento(EntityManager entityManager,
                              MailSender mailSender,
-                             HttpRequestSender httpRequestSender) {
+                             NotaFiscalClient nfClient,
+                             VendedorRankingClient vrClient) {
+
         this.entityManager = entityManager;
         this.mailSender = mailSender;
-        this.httpRequestSender = httpRequestSender;
+        this.nfClient = nfClient;
+        this.vrClient = vrClient;
     }
 
     private void notaFiscal(Compra compra,
@@ -35,21 +34,12 @@ public class ProcessaPagamento {
 
         URI uri = uriBuilder.replacePath("/nf").build().toUri();
 
-        ObjectMapper mapper = new ObjectMapper();
-        ObjectNode node = mapper.createObjectNode();
+        NotaFiscalRequest request = new NotaFiscalRequest(
+                compra.getId(),
+                compra.getUsuario().getId()
+        );
 
-        node.put("idCompra", compra.getId());
-        node.put("idUsuario", compra.getUsuario().getId());
-
-        try {
-            String json = mapper.writeValueAsString(node);
-            HttpResponse<String> response = httpRequestSender.postJson(json, uri);
-            System.out.println("NF body: " + response.body());
-
-            // Faria algo aqui se o status retornado não fosse 200...
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
+        nfClient.send(uri, request);
     }
 
     private void rankingVendedores(Compra compra,
@@ -57,21 +47,12 @@ public class ProcessaPagamento {
                                    UriComponentsBuilder uriBuilder) {
         URI uri = uriBuilder.replacePath("/ranking").build().toUri();
 
-        ObjectMapper mapper = new ObjectMapper();
-        ObjectNode node = mapper.createObjectNode();
+        VendedorRankingRequest request = new VendedorRankingRequest(
+                compra.getId(),
+                gateway.getNome()
+        );
 
-        node.put("idCompra", compra.getId());
-        node.put("gateway", gateway.getNome());
-
-        try {
-            String json = mapper.writeValueAsString(node);
-            HttpResponse<String> response = httpRequestSender.postJson(json, uri);
-            System.out.println("Ranking body: " + response.body());
-
-            // Faria algo se status fosse diferente de 200...
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
+        vrClient.send(uri, request);
     }
 
     private void emailSucesso(Compra compra) {
