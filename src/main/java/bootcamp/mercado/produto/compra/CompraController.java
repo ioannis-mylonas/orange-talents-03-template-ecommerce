@@ -1,6 +1,6 @@
 package bootcamp.mercado.produto.compra;
 
-import bootcamp.mercado.email.MailSender;
+import bootcamp.mercado.email.MercadoMailSender;
 import bootcamp.mercado.produto.Produto;
 import bootcamp.mercado.produto.ProdutoRepository;
 import bootcamp.mercado.produto.compra.gateway.Gateway;
@@ -25,14 +25,14 @@ import java.util.Optional;
 public class CompraController {
     private final ProdutoRepository produtoRepository;
     private final CompraRepository compraRepository;
-    private final MailSender mailSender;
+    private final MercadoMailSender mailSender;
     private final GatewayList gatewayList;
 
     private final String tag = "[CompraController] ";
 
     public CompraController(ProdutoRepository produtoRepository,
                             CompraRepository compraRepository,
-                            MailSender mailSender,
+                            MercadoMailSender mailSender,
                             GatewayList gatewayList) {
 
         this.produtoRepository = produtoRepository;
@@ -65,7 +65,7 @@ public class CompraController {
 
         URI targetUrl = gateway.get().gerarURI(compra, returnUrl);
 
-        mailSender.envia("Compra efetuada!", compra.getUsuario().getLogin());
+        mailSender.envia("Compra efetuada!", "Compra", compra.getUsuario().getLogin());
 
         return ResponseEntity
                 .status(HttpStatus.FOUND)

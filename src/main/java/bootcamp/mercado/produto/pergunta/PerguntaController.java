@@ -1,6 +1,6 @@
 package bootcamp.mercado.produto.pergunta;
 
-import bootcamp.mercado.email.MailSender;
+import bootcamp.mercado.email.MercadoMailSender;
 import bootcamp.mercado.produto.Produto;
 import bootcamp.mercado.produto.ProdutoRepository;
 import bootcamp.mercado.usuario.Usuario;
@@ -17,11 +17,11 @@ public class PerguntaController {
 	
 	private ProdutoRepository produtoRepository;
 	private PerguntaRepository perguntaRepository;
-	private MailSender mailSender;
+	private MercadoMailSender mailSender;
 	
 	public PerguntaController(ProdutoRepository produtoRepository,
 							  PerguntaRepository perguntaRepository,
-							  MailSender mailSender) {
+							  MercadoMailSender mailSender) {
 		
 		this.produtoRepository = produtoRepository;
 		this.perguntaRepository = perguntaRepository;

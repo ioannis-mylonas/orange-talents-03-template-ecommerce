@@ -1,6 +1,6 @@
 package bootcamp.mercado.produto.compra.gateway.response;
 
-import bootcamp.mercado.email.MailSender;
+import bootcamp.mercado.email.MercadoMailSender;
 import bootcamp.mercado.produto.compra.Compra;
 import bootcamp.mercado.produto.compra.CompraStatus;
 import bootcamp.mercado.produto.compra.gateway.Gateway;
@@ -13,12 +13,12 @@ import java.net.URI;
 @Component
 public class ProcessaPagamento {
     private final EntityManager entityManager;
-    private final MailSender mailSender;
+    private final MercadoMailSender mailSender;
     private final NotaFiscalClient nfClient;
     private final VendedorRankingClient vrClient;
 
     public ProcessaPagamento(EntityManager entityManager,
-                             MailSender mailSender,
+                             MercadoMailSender mailSender,
                              NotaFiscalClient nfClient,
                              VendedorRankingClient vrClient) {
 
@@ -60,14 +60,14 @@ public class ProcessaPagamento {
                 compra.getId());
 
         String endereco = compra.getUsuario().getLogin();
-        mailSender.envia(mensagem, endereco);
+        mailSender.envia(mensagem, "Pagamento efetuado com sucesso!", endereco);
     }
 
     private void emailFalha(Compra compra, Gateway gateway, String redirectUri) {
         URI uri = gateway.gerarURI(compra, redirectUri);
         mailSender.envia(String.format(
                 "Compra malsucedida, tente novamente no link %s", uri
-        ), compra.getUsuario().getLogin());
+        ), "Pagamento inválido!", compra.getUsuario().getLogin());
     }
 
     private void save(Pagamento pagamento, Compra compra, CompraStatus status) {

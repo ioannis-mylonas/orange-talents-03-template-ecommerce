@@ -1,6 +1,6 @@
 package bootcamp.mercado.produto.pergunta;
 
-import bootcamp.mercado.email.MailSender;
+import bootcamp.mercado.email.MercadoMailSender;
 import bootcamp.mercado.produto.Produto;
 import bootcamp.mercado.usuario.Usuario;
 import org.hibernate.annotations.CreationTimestamp;
@@ -35,9 +35,9 @@ public class Pergunta {
 		this.produto = produto;
 	}
 	
-	public void envia(MailSender mailSender) {
+	public void envia(MercadoMailSender mailSender) {
 		System.out.println("Email enviado por " + usuario.getLogin());
-		mailSender.envia(titulo, produto.getDono().getLogin());
+		mailSender.envia(titulo, "Pergunta", produto.getDono().getLogin());
 	}
 
 	public String getTitulo() {
