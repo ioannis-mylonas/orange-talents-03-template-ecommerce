@@ -16,6 +16,7 @@ public abstract class Gateway {
     }
 
     public boolean isGateway(String value) {
+        if (value == null) return false;
         return value.trim().equalsIgnoreCase(nome);
     }
     public abstract URI gerarURI(Compra compra, String redirectUri);

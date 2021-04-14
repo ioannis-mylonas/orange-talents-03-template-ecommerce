@@ -14,6 +14,7 @@ public class GatewayExistsValidator implements ConstraintValidator<GatewayExists
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
+        if (value == null) return true;
         return gatewayList.exists(value);
     }
 }
