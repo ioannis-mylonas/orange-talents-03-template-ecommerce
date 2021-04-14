@@ -27,9 +27,9 @@ public class Produto {
 	@Lob
 	@Column(nullable = false, length = 1000)
 	private String descricao;
-	@ManyToMany
+	@ManyToMany(cascade = CascadeType.MERGE)
 	@JoinColumn(nullable = false)
-	List<Caracteristica> caracteristicas;
+	List<Caracteristica> caracteristicas = new ArrayList<>();
 	@ManyToOne
 	@JoinColumn(nullable = false)
 	private Categoria categoria;
@@ -48,7 +48,6 @@ public class Produto {
 	
 	public Produto(String nome, BigDecimal preco,
 			Integer quantidade, String descricao,
-			List<Caracteristica> caracteristicas,
 			Categoria categoria,
 			Usuario dono) {
 		
@@ -56,7 +55,6 @@ public class Produto {
 		this.preco = preco;
 		this.quantidade = quantidade;
 		this.descricao = descricao;
-		this.caracteristicas = caracteristicas;
 		this.categoria = categoria;
 		this.dono = dono;
 	}
@@ -101,5 +99,9 @@ public class Produto {
 		Assert.isTrue(this.quantidade >= quantidade,
 				"Tentando diminuir quantidade maior que a quantidade disponível do produto!");
 		this.quantidade -= quantidade;
+	}
+
+	public void addCaracteristicas(List<Caracteristica> caracteristicas) {
+		this.caracteristicas.addAll(caracteristicas);
 	}
 }

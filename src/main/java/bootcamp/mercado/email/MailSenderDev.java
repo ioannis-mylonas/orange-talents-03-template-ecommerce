@@ -4,7 +4,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 @Component
-@Profile("dev")
+@Profile({"dev", "test"})
 public class MailSenderDev implements MercadoMailSender {
 	private void printLinha() {
 		System.out.println("==================================");

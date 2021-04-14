@@ -46,12 +46,15 @@ public class ProdutoRequest {
 	public Produto converte(CategoriaRepository categoriaRepository, Usuario dono) {
 		List<Caracteristica> caracteristicasObj = caracteristicas
 				.stream()
-				.map(i -> { return i.converte(); })
+				.map(CaracteristicaRequest::converte)
 				.collect(Collectors.toList());
 		
 		Categoria categoriaObj = categoriaRepository.findByNomeIgnoreCase(categoria).get();
-		
-		return new Produto(nome, preco, quantidade,
-				descricao, caracteristicasObj, categoriaObj, dono);
+		Produto produtoObj = new Produto(nome, preco, quantidade,
+				descricao, categoriaObj, dono);
+
+		produtoObj.addCaracteristicas(caracteristicasObj);
+
+		return produtoObj;
 	}
 }

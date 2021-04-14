@@ -5,6 +5,7 @@ import bootcamp.mercado.usuario.Usuario;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -30,7 +31,7 @@ public class Compra {
     @Column(nullable = false)
     private CompraStatus status;
     @OneToMany(mappedBy = "compra", cascade = CascadeType.MERGE)
-    private Set<Pagamento> pagamentos;
+    private final Set<Pagamento> pagamentos = new HashSet<>();
 
     @Deprecated
     public Compra() {}

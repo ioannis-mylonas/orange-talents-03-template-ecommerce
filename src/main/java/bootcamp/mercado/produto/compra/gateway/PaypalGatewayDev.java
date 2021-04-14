@@ -8,7 +8,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.net.URI;
 
 @Component
-@Profile("dev")
+@Profile({"dev", "test"})
 public class PaypalGatewayDev extends Gateway {
     public PaypalGatewayDev() {
         super("Paypal",

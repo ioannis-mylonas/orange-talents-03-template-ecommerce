@@ -94,7 +94,7 @@ abstract class PagamentoControllerTest<S extends TransacaoStatus, T extends Tran
 
     @WithMockUser
     @Test
-    public void testaProcessaSucessoPagseguro() throws Exception {
+    public void testaProcessaSucesso() throws Exception {
         // Build JSON
         ObjectMapper objectMapper = new ObjectMapper();
         String json = objectMapper.writeValueAsString(requestSucesso);
@@ -109,7 +109,7 @@ abstract class PagamentoControllerTest<S extends TransacaoStatus, T extends Tran
 
     @WithMockUser
     @Test
-    public void testaProcessaErroPagseguro() throws Exception {
+    public void testaProcessaErro() throws Exception {
         // Build JSON
         ObjectMapper objectMapper = new ObjectMapper();
         String json = objectMapper.writeValueAsString(requestErro);

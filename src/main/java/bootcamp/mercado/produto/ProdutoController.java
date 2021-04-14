@@ -44,7 +44,6 @@ public class ProdutoController {
 						 @AuthenticationPrincipal Usuario dono) {
 
 		Produto produto = request.converte(categoriaRepository, dono);
-		caracteristicaRepository.saveAll(produto.getCaracteristicas());
 		repository.save(produto);
 		return produto.getId();
 	}

@@ -121,12 +121,6 @@ class NotaFiscalRequestTest {
                 caracteristicaBuilder.setNome("Característica 5").build()
         );
 
-        caracteristicaRepository.saveAll(
-                caracteristicaRequests.stream()
-                        .map(CaracteristicaRequest::converte)
-                        .collect(Collectors.toList())
-        );
-
         List<Categoria> categorias = categoriaRepository.saveAll(List.of(
                 new Categoria("Categoria 1"),
                 new Categoria("Categoria 2"),

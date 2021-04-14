@@ -16,6 +16,8 @@ public class TransacaoIncompletaValidator implements ConstraintValidator<Transac
 
     @Override
     public boolean isValid(Long value, ConstraintValidatorContext context) {
+        if (value == null) return true;
+
         Compra compra = entityManager.find(Compra.class, value);
         if (compra != null && compra.getStatus() == CompraStatus.SUCESSO)
             return false;
