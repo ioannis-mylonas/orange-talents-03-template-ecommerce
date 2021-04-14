@@ -44,11 +44,11 @@ public abstract class PagamentoController<T extends TransacaoRequest> {
         Gateway gateway = gatewayList.getGateway(gatewayId).get();
         Pagamento pagamento = request.converte(gateway, compra);
 
-        if (request.getStatus() == CompraStatus.SUCESSO) {
+        if (request.getStatus().getCompraStatus() == CompraStatus.SUCESSO) {
             processaPagamento.sucesso(compra,
                     pagamento, gateway, uriComponentsBuilder);
 
-        } else if(request.getStatus() == CompraStatus.FALHA) {
+        } else if(request.getStatus().getCompraStatus() == CompraStatus.FALHA) {
             String redirectUri = uriComponentsBuilder
                     .path(gateway.getRedirectPath())
                     .toUriString();

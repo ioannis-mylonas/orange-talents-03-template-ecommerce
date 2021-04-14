@@ -11,7 +11,7 @@ import bootcamp.mercado.validator.Unique;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-public class PaypalRequest implements TransacaoRequest {
+public class PaypalRequest implements TransacaoRequest<PaypalStatus> {
     @NotNull @Exists(target = Compra.class, field = "id") @TransacaoIncompleta
     private Long compraId;
     @NotBlank @Unique(target = Pagamento.class, field = "pagamentoId")
@@ -36,11 +36,11 @@ public class PaypalRequest implements TransacaoRequest {
     @Override
     public Pagamento converte(Gateway gateway, Compra compra) {
         return new Pagamento(compra, gateway.getNome(),
-                pagamentoId, status.getStatus());
+                pagamentoId, status.getCompraStatus());
     }
 
     @Override
-    public CompraStatus getStatus() {
-        return status.getStatus();
+    public PaypalStatus getStatus() {
+        return status;
     }
 }

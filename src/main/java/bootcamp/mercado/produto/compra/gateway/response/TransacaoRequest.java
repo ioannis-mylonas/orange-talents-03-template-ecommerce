@@ -5,8 +5,8 @@ import bootcamp.mercado.produto.compra.CompraStatus;
 import bootcamp.mercado.produto.compra.Pagamento;
 import bootcamp.mercado.produto.compra.gateway.Gateway;
 
-public interface TransacaoRequest {
+public interface TransacaoRequest<T extends TransacaoStatus> {
     Long getCompraId();
     Pagamento converte(Gateway gateway, Compra compra);
-    CompraStatus getStatus();
+    T getStatus();
 }

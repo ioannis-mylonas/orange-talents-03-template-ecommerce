@@ -11,13 +11,13 @@ import bootcamp.mercado.validator.Unique;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-public class PagseguroRequest implements TransacaoRequest {
+public class PagseguroRequest implements TransacaoRequest<PagseguroStatus> {
     @NotNull @Exists(target = Compra.class, field = "id") @TransacaoIncompleta
-    private Long compraId;
+    private final Long compraId;
     @NotBlank @Unique(target = Pagamento.class, field = "pagamentoId")
-    private String pagamentoId;
+    private final String pagamentoId;
     @NotNull
-    private PagseguroStatus status;
+    private final PagseguroStatus status;
 
     public PagseguroRequest(Long compraId, @NotBlank String pagamentoId, PagseguroStatus status) {
         this.compraId = compraId;
@@ -29,11 +29,11 @@ public class PagseguroRequest implements TransacaoRequest {
         return new Pagamento(compra,
                 gateway.getNome(),
                 pagamentoId,
-                status.getStatus());
+                status.getCompraStatus());
     }
 
-    public CompraStatus getStatus() {
-        return status.getStatus();
+    public PagseguroStatus getStatus() {
+        return status;
     }
 
     public Long getCompraId() {

@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 import java.util.Arrays;
 
-public enum PaypalStatus {
+public enum PaypalStatus implements TransacaoStatus {
     SUCESSO(CompraStatus.SUCESSO, 1),
     ERRO(CompraStatus.FALHA, 0);
 
@@ -32,7 +32,7 @@ public enum PaypalStatus {
         return PaypalStatus.fromCode(value);
     }
 
-    public CompraStatus getStatus() { return status; }
+    public CompraStatus getCompraStatus() { return status; }
 
     public int getCode() {
         return code;

@@ -2,7 +2,7 @@ package bootcamp.mercado.produto.compra.gateway.response;
 
 import bootcamp.mercado.produto.compra.CompraStatus;
 
-public enum PagseguroStatus {
+public enum PagseguroStatus implements TransacaoStatus {
     SUCESSO(CompraStatus.SUCESSO),
     ERRO(CompraStatus.FALHA);
 
@@ -12,7 +12,7 @@ public enum PagseguroStatus {
         this.value = value;
     }
 
-    public CompraStatus getStatus() {
+    public CompraStatus getCompraStatus() {
         return value;
     }
 }
