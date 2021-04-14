@@ -1,11 +1,9 @@
 package bootcamp.mercado.produto.caracteristica;
 
-import org.hibernate.annotations.Parameter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.NullAndEmptySource;
-import org.junit.jupiter.params.provider.ValueSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
@@ -25,6 +23,8 @@ class CaracteristicaRequestTest {
     private SpringConstraintValidatorFactory factory;
     private LocalValidatorFactoryBean validator;
 
+    private final CaracteristicaRequestBuilder builder = new CaracteristicaRequestBuilder();
+
     @BeforeEach
     public void setup() {
         factory = new SpringConstraintValidatorFactory(
@@ -35,12 +35,16 @@ class CaracteristicaRequestTest {
         validator.setConstraintValidatorFactory(factory);
         validator.setApplicationContext(context);
         validator.afterPropertiesSet();
+
+        builder
+                .setNome("Um Nome")
+                .setDescricao("Uma Descricao");
     }
 
     @ParameterizedTest
     @NullAndEmptySource
     public void testaNomeInvalido(String nome) {
-        CaracteristicaRequest request = new CaracteristicaRequest(nome, "Uma descrição");
+        CaracteristicaRequest request = builder.setNome(nome).build();
         Set<ConstraintViolation<CaracteristicaRequest>> errors = validator.validate(request);
         assertFalse(errors.isEmpty());
     }
@@ -48,7 +52,7 @@ class CaracteristicaRequestTest {
     @ParameterizedTest
     @NullAndEmptySource
     public void testaDescricaoInvalida(String descricao) {
-        CaracteristicaRequest request = new CaracteristicaRequest("Um Nome", descricao);
+        CaracteristicaRequest request = builder.setDescricao(descricao).build();
         Set<ConstraintViolation<CaracteristicaRequest>> errors = validator.validate(request);
         assertFalse(errors.isEmpty());
     }
@@ -59,7 +63,7 @@ class CaracteristicaRequestTest {
             "UmA CaRaCtErÍstica,UmA DesCrIçâO",
             "    UmA CarAcTerìStica    ,  Descrição   "})
     public void testaCaracteristicaValida(String nome, String descricao) {
-        CaracteristicaRequest request = new CaracteristicaRequest(nome, descricao);
+        CaracteristicaRequest request = builder.setNome(nome).setDescricao(descricao).build();
         Set<ConstraintViolation<CaracteristicaRequest>> errors = validator.validate(request);
         assertTrue(errors.isEmpty());
     }

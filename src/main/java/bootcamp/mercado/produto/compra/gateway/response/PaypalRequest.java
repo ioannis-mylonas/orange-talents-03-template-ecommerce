@@ -28,6 +28,10 @@ public class PaypalRequest implements TransacaoRequest<PaypalStatus> {
         this.status = status;
     }
 
+    public String getPagamentoId() {
+        return pagamentoId;
+    }
+
     @Override
     public Long getCompraId() {
         return compraId;

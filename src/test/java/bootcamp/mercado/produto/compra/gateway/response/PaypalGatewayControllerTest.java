@@ -28,11 +28,11 @@ import javax.persistence.Query;
 import java.util.List;
 import java.util.Optional;
 
-@WebMvcTest(PagseguroGatewayController.class)
-class PagseguroGatewayControllerTest extends PagamentoControllerTest<PagseguroStatus, PagseguroRequest> {
-    PagseguroGatewayControllerTest() {
-        super("/pagamentos/pagseguro",
-                new PagseguroRequest(1L, "ID", PagseguroStatus.SUCESSO),
-                new PagseguroRequest(1L, "ID", PagseguroStatus.ERRO));
+@WebMvcTest(PaypalGatewayController.class)
+public class PaypalGatewayControllerTest extends PagamentoControllerTest<PaypalStatus, PaypalRequest>{
+    PaypalGatewayControllerTest() {
+        super("/pagamentos/paypal",
+                new PaypalRequest(1L, "ID", PaypalStatus.SUCESSO),
+                new PaypalRequest(1L, "ID", PaypalStatus.SUCESSO));
     }
 }

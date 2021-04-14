@@ -2,16 +2,17 @@ package bootcamp.mercado.endpointfake;
 
 import bootcamp.mercado.produto.Produto;
 import bootcamp.mercado.produto.ProdutoRepository;
+import bootcamp.mercado.produto.ProdutoRequestBuilder;
 import bootcamp.mercado.produto.caracteristica.Caracteristica;
 import bootcamp.mercado.produto.caracteristica.CaracteristicaRepository;
+import bootcamp.mercado.produto.caracteristica.CaracteristicaRequest;
+import bootcamp.mercado.produto.caracteristica.CaracteristicaRequestBuilder;
 import bootcamp.mercado.produto.categoria.Categoria;
 import bootcamp.mercado.produto.categoria.CategoriaRepository;
 import bootcamp.mercado.produto.compra.Compra;
 import bootcamp.mercado.produto.compra.CompraRepository;
 import bootcamp.mercado.produto.compra.CompraStatus;
-import bootcamp.mercado.usuario.Senha;
-import bootcamp.mercado.usuario.Usuario;
-import bootcamp.mercado.usuario.UsuarioRepository;
+import bootcamp.mercado.usuario.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -29,6 +30,7 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -93,15 +95,37 @@ class NotaFiscalRequestTest {
 
     @BeforeEach
     public void setup() {
-        usuarios = usuarioRepository.saveAll(List.of(
-                new Usuario("usuario1.login@email.com", new Senha("123456", passwordEncoder)),
-                new Usuario("usuario2.login@email.com", new Senha("654321", passwordEncoder)),
-                new Usuario("usuario3.login@email.com", new Senha("546123", passwordEncoder))
-        ));
+        UsuarioRequestBuilder usuarioBuilder = new UsuarioRequestBuilder();
+        usuarioBuilder.setSenha("123456");
 
-        List<Caracteristica> caracteristicas = caracteristicaRepository.saveAll(List.of(
-                new Caracteristica("Caracteristica", "Descricao")
-        ));
+        List<UsuarioRequest> usuarioRequests = List.of(
+                usuarioBuilder.setNome("usuario1.login@email.com").build(),
+                usuarioBuilder.setNome("usuario2.login@email.com").build(),
+                usuarioBuilder.setNome("usuario3.login@email.com").build()
+        );
+
+        usuarios = usuarioRepository.saveAll(
+                usuarioRequests.stream()
+                        .map(i -> i.converte(passwordEncoder))
+                        .collect(Collectors.toList())
+        );
+
+        CaracteristicaRequestBuilder caracteristicaBuilder = new CaracteristicaRequestBuilder();
+        caracteristicaBuilder.setDescricao("Descrição");
+
+        List<CaracteristicaRequest> caracteristicaRequests = List.of(
+                caracteristicaBuilder.setNome("Característica 1").build(),
+                caracteristicaBuilder.setNome("Característica 2").build(),
+                caracteristicaBuilder.setNome("Característica 3").build(),
+                caracteristicaBuilder.setNome("Característica 4").build(),
+                caracteristicaBuilder.setNome("Característica 5").build()
+        );
+
+        caracteristicaRepository.saveAll(
+                caracteristicaRequests.stream()
+                        .map(CaracteristicaRequest::converte)
+                        .collect(Collectors.toList())
+        );
 
         List<Categoria> categorias = categoriaRepository.saveAll(List.of(
                 new Categoria("Categoria 1"),
@@ -109,14 +133,33 @@ class NotaFiscalRequestTest {
                 new Categoria("Categoria 3")
         ));
 
-        List<Produto> produtos = produtoRepository.saveAll(List.of(
-                new Produto("Produto 1", BigDecimal.valueOf(20.14), 5, "Descricao",
-                        List.of(pickRandomValue(caracteristicas)), pickRandomValue(categorias),
-                        pickRandomValue(usuarios)),
+        ProdutoRequestBuilder produtoBuilder = new ProdutoRequestBuilder();
+        produtoBuilder.setDescricao("Descrição");
 
-                new Produto("Produto 2", BigDecimal.valueOf(35.20), 1, "Descricao",
-                        List.of(pickRandomValue(caracteristicas)), pickRandomValue(categorias),
-                        pickRandomValue(usuarios))
+        List<Produto> produtos = produtoRepository.saveAll(List.of(
+                produtoBuilder
+                        .setNome("Produto 1")
+                        .setPreco(BigDecimal.valueOf(20.14))
+                        .setQuantidade(5)
+                        .addCaracteristica(pickRandomValue(caracteristicaRequests))
+                        .setCategoria(pickRandomValue(categorias).getNome())
+                        .build().converte(categoriaRepository, pickRandomValue(usuarios)),
+
+                produtoBuilder
+                        .setNome("Produto 2")
+                        .setPreco(BigDecimal.valueOf(35.20))
+                        .setQuantidade(1)
+                        .addCaracteristica(pickRandomValue(caracteristicaRequests))
+                        .setCategoria(pickRandomValue(categorias).getNome())
+                        .build().converte(categoriaRepository, pickRandomValue(usuarios)),
+
+                produtoBuilder
+                        .setNome("Produto 3")
+                        .setPreco(BigDecimal.valueOf(55.10))
+                        .setQuantidade(2)
+                        .addCaracteristica(pickRandomValue(caracteristicaRequests))
+                        .setCategoria(pickRandomValue(categorias).getNome())
+                        .build().converte(categoriaRepository, pickRandomValue(usuarios))
         ));
 
         compras = compraRepository.saveAll(List.of(
