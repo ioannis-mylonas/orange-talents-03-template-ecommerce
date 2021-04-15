@@ -12,7 +12,11 @@ public class PerguntaRequest {
 	public void setTitulo(String titulo) {
 		this.titulo = titulo;
 	}
-	
+
+	public String getTitulo() {
+		return titulo;
+	}
+
 	public Pergunta converte(Usuario usuario, Produto produto) {
 		return new Pergunta(titulo, usuario, produto);
 	}
