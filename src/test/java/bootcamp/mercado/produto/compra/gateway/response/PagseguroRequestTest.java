@@ -134,7 +134,7 @@ class PagseguroRequestTest {
         List<Produto> produtos = produtoRepository.saveAll(List.of(
                 produtoBuilder
                         .setNome("Produto 1")
-                        .setPreco(BigDecimal.valueOf(20.14))
+                        .setPreco(20.14)
                         .setQuantidade(5)
                         .addCaracteristica(pickRandomValue(caracteristicaRequests))
                         .setCategoria(pickRandomValue(categorias).getNome())
@@ -142,7 +142,7 @@ class PagseguroRequestTest {
 
                 produtoBuilder
                         .setNome("Produto 2")
-                        .setPreco(BigDecimal.valueOf(35.20))
+                        .setPreco(35.20)
                         .setQuantidade(2)
                         .addCaracteristica(pickRandomValue(caracteristicaRequests))
                         .setCategoria(pickRandomValue(categorias).getNome())
@@ -150,7 +150,7 @@ class PagseguroRequestTest {
 
                 produtoBuilder
                         .setNome("Produto 3")
-                        .setPreco(BigDecimal.valueOf(55.10))
+                        .setPreco(55.10)
                         .setQuantidade(2)
                         .addCaracteristica(pickRandomValue(caracteristicaRequests))
                         .setCategoria(pickRandomValue(categorias).getNome())

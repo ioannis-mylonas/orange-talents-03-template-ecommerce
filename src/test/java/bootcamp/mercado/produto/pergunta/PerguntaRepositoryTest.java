@@ -48,7 +48,7 @@ class PerguntaRepositoryTest {
 
         produto = new ProdutoRequestBuilder()
                 .setNome("Produto").setDescricao("Descrição")
-                .setQuantidade(50).setPreco(BigDecimal.valueOf(35.20))
+                .setQuantidade(50).setPreco(35.20)
                 .setCategoria("Categoria").build().converte(categoriaRepository, usuario);
         entityManager.persist(produto);
 

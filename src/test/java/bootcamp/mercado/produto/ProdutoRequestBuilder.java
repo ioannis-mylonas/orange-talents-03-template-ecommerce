@@ -11,7 +11,7 @@ public class ProdutoRequestBuilder {
     private String nome, descricao, categoria;
     private BigDecimal preco;
     private Integer quantidade;
-    private final List<CaracteristicaRequest> caracteristicas = new ArrayList<>();
+    private List<CaracteristicaRequest> caracteristicas = new ArrayList<>();
 
     public ProdutoRequestBuilder setNome(String nome) {
         this.nome = nome;
@@ -25,6 +25,11 @@ public class ProdutoRequestBuilder {
 
     public ProdutoRequestBuilder setCategoria(String categoria) {
         this.categoria = categoria;
+        return this;
+    }
+
+    public ProdutoRequestBuilder setPreco(Double preco) {
+        this.preco = BigDecimal.valueOf(preco);
         return this;
     }
 
@@ -45,6 +50,11 @@ public class ProdutoRequestBuilder {
 
     public ProdutoRequestBuilder addAllCaracteristica(Collection<CaracteristicaRequest> caracteristicas) {
         this.caracteristicas.addAll(caracteristicas);
+        return this;
+    }
+
+    public ProdutoRequestBuilder setCaracteristicas(ArrayList<CaracteristicaRequest> caracteristicas) {
+        this.caracteristicas = caracteristicas;
         return this;
     }
 

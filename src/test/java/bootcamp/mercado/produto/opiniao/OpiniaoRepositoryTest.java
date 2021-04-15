@@ -53,7 +53,7 @@ class OpiniaoRepositoryTest {
                 .setNome("Produto")
                 .setDescricao("Descrição")
                 .setCategoria("Categoria")
-                .setPreco(BigDecimal.valueOf(50.13))
+                .setPreco(50.13)
                 .setQuantidade(30).build().converte(categoriaRepository, usuario);
         entityManager.persist(produto);
 

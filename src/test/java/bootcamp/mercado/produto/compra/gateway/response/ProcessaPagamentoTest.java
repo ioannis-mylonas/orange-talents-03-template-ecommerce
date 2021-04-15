@@ -72,7 +72,7 @@ class ProcessaPagamentoTest {
                 .setNome("Produto")
                 .setDescricao("Descrição")
                 .setCategoria("Categoria")
-                .setPreco(BigDecimal.valueOf(20.13))
+                .setPreco(20.13)
                 .setQuantidade(500).build()
                 .converte(categoriaRepository, usuario);
 

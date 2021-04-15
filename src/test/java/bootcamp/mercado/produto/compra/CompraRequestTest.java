@@ -75,7 +75,7 @@ class CompraRequestTest {
 
         produto = new ProdutoRequestBuilder()
                 .setNome("Produto").setDescricao("Descrição")
-                .setQuantidade(500).setPreco(BigDecimal.valueOf(50.30))
+                .setQuantidade(500).setPreco(50.30)
                 .setCategoria(categoria.getNome())
                 .build().converte(categoriaRepository, usuario);
 
