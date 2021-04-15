@@ -27,8 +27,7 @@ public class Produto {
 	@Lob
 	@Column(nullable = false, length = 1000)
 	private String descricao;
-	@ManyToMany(cascade = CascadeType.MERGE)
-	@JoinColumn(nullable = false)
+	@ManyToMany(cascade = CascadeType.MERGE, mappedBy = "produto")
 	List<Caracteristica> caracteristicas = new ArrayList<>();
 	@ManyToOne
 	@JoinColumn(nullable = false)

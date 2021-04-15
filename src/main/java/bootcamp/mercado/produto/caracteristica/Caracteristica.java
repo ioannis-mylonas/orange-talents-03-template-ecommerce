@@ -1,5 +1,7 @@
 package bootcamp.mercado.produto.caracteristica;
 
+import bootcamp.mercado.produto.Produto;
+
 import javax.persistence.*;
 
 @Entity
@@ -10,6 +12,9 @@ public class Caracteristica {
 	private String nome;
 	@Column(nullable = false)
 	private String descricao;
+	@ManyToOne
+	@JoinColumn(nullable = false)
+	private Produto produto;
 	
 	@Deprecated
 	public Caracteristica() {}
